@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+model MuscleGroup{
+  id Int @id @default(autoincrement())
+  name String
+
+  @@map("muscle_groups")
+}
+
+model UserSex{
+  id Int @id @default(autoincrement())
+  name String
+
+  @@map("user_sexs")
+}
+
+model UserRole{
+  id Int @id @default(autoincrement())
+  name String
+
+  @@map("user_roles")
+}
+
+// Tables
+model Nationality{
+  id Int @id @default(autoincrement())
+  name String
+  flag String?
+  users User[]
+
+  @@map("nationalities")
+}
+
+model Rank{
+  id Int @id @default(autoincrement())
+  number Int @unique
+  name String
+  required_xp Int
+  image String?
+  users User[]
+
+  @@map("ranks")
+}
+
+model User{
+  id String @id @default(uuid())
+  email String @unique
+  password String 
+  name String
+  surname String
+  role String @default("user")
+  age Int
+  weight_kg Float
+  height_cm Int
+  sex String
+  xp Int @default(0)
+  image String?
+  created_at DateTime @default(now())
+  nationality_id Int
+  nationalities Nationality @relation(fields: [nationality_id], references: [id], onDelete: Cascade)
+  rank_id Int
+  ranks Rank @relation(fields: [rank_id], references: [id], onDelete: Cascade)
+
+  @@map("users")
+}
