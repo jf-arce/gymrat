@@ -49,7 +49,7 @@ model Rank{
   id Int @id @default(autoincrement())
   number Int @unique
   name String
-  required_xp Int
+  requiredXp Int @map("required_xp")
   image String?
   users User[]
 
@@ -64,16 +64,125 @@ model User{
   surname String
   role String @default("user")
   age Int
-  weight_kg Float
-  height_cm Int
+  weightKg Float @map("weight_kg")
+  heightCm Int @map("height_cm")
   sex String
   xp Int @default(0)
   image String?
-  created_at DateTime @default(now())
-  nationality_id Int
-  nationalities Nationality @relation(fields: [nationality_id], references: [id], onDelete: Cascade)
-  rank_id Int
-  ranks Rank @relation(fields: [rank_id], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @map("created_at")
+  nationalityId Int @map("nationality_id")
+  rankId Int @map("rank_id")
+  nationalities Nationality @relation(fields: [nationalityId], references: [id], onDelete: Cascade)
+  ranks Rank @relation(fields: [rankId], references: [id], onDelete: Cascade)
+  routines Routine[]
+  userBadges UserBadge[]
 
   @@map("users")
 }
+
+model Badge{
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  image String?
+  userBadges UserBadge[]
+
+  @@map("badges")
+}
+
+model UserBadge{
+  id Int @id @default(autoincrement())
+  earnedDate DateTime @default(now()) @map("earned_date")
+  isEquipped Boolean @default(false) @map("is_equipped")
+  userId String @map("user_id") 
+  badgeId Int @map("badge_id")
+  users User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badges Badge @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+
+  @@map("users_badges")
+}
+
+model Routine{
+  id Int @id @default(autoincrement())
+  name String
+  isCurrent Boolean @default(false) @map("is_current")
+  nextTraining Int @default(1) @map("next_training")
+  userId String @map("user_id")
+  users User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trainings Training[]
+
+  @@map("routines")
+}
+
+model Training{
+  id Int @id @default(autoincrement())
+  number Int
+  name String
+  routineId Int @map("routine_id")
+  routines Routine @relation(fields: [routineId], references: [id], onDelete: Cascade)
+  trainingExercises TrainingExercise[]
+  sessions Session[]
+
+  @@map("trainings")
+}
+
+model Exercise{
+  id Int @id @default(autoincrement())
+  name String
+  muscleGroup String @map("muscle_group")
+  notes String?
+  image String?
+  trainingExercises TrainingExercise[]
+
+  @@map("exercises")
+}
+
+model TrainingExercise{
+  id Int @id @default(autoincrement())
+  rest Int
+  trainingId Int @map("training_id")
+  exerciseId Int @map("exercise_id")
+  trainings Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+  exercises Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  sets Set[]
+
+  @@map("trainings_exercises")
+}
+
+model Set{
+  id Int @id @default(autoincrement())
+  weightKg Float @map("weight_kg")
+  repetitions Int
+  trainingExerciseId Int @map("training_exercise_id")
+  trainingExercise TrainingExercise @relation(fields: [trainingExerciseId], references: [id], onDelete: Cascade)
+
+  @@map("sets")
+}
+
+model Challenge{
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  rewardXp Int @map("reward_xp")
+  completed Boolean @default(false)
+  image String?
+  sessions Session[]
+
+  @@map("challenges")
+}
+
+model Session{
+  id Int @id @default(autoincrement())
+  datetime DateTime @default(now())
+  caloriesBurned Float @map("calories_burned")
+  rewardXp Int @map("reward_xp")
+  durationMinutes Int @map("duration_minutes")
+  trainingId Int @map("training_id")
+  challengeId Int @map("challenge_id")
+  training Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+  challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+

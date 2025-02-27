@@ -10,6 +10,7 @@ import { RankRepository } from 'src/modules/ranks/domain/rank.repository';
 import { UserRole } from '../domain/value-objects/user-rol';
 import { randomUUID } from 'crypto';
 import { UserSex } from '../domain/value-objects/user-sex';
+import { CustomError } from 'src/modules/shared/errors/custom-error';
 
 @Injectable()
 export class UsersService {
@@ -23,10 +24,10 @@ export class UsersService {
     const userExists = await this.userRepository.findOneByEmail(
       createUserDto.email,
     );
-    if (userExists) throw new Error('User already exists');
+    if (userExists) throw CustomError.badRequest('User already exists');
 
     const lowestRank = await this.rankRepository.findByNumber(1);
-    if (!lowestRank) throw new Error('Lowest rank not found');
+    if (!lowestRank) throw CustomError.notFound('Rank not found');
 
     const userEntity = new User(
       randomUUID(),
@@ -34,7 +35,7 @@ export class UsersService {
       createUserDto.password,
       createUserDto.name,
       createUserDto.surname,
-      UserRole.admin(),
+      UserRole.user(),
       createUserDto.age,
       createUserDto.weightKg,
       createUserDto.heightCm,
@@ -53,35 +54,35 @@ export class UsersService {
 
   async findAll(): Promise<GetUserDto[]> {
     const users = await this.userRepository.findAll();
-    if (users.length === 0) throw new Error('No se encontraron usuarios');
+    if (users.length === 0) throw CustomError.notFound('Users not found');
+
     const usersDto = users.map((user) => {
       return GetUserDto.create(user);
     });
-
     return usersDto;
   }
 
   async findOneById(id: string): Promise<GetUserDto> {
     const user = await this.userRepository.findOneById(id);
-    if (!user) throw new Error('User not found');
+    if (!user) throw CustomError.notFound('User not found');
     return GetUserDto.create(user);
   }
 
   async findOneByEmail(email: string): Promise<GetUserDto> {
     const user = await this.userRepository.findOneByEmail(email);
-    if (!user) throw new Error('User not found');
+    if (!user) throw CustomError.notFound('User not found');
     return GetUserDto.create(user);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.userRepository.findOneById(id);
-    if (!user) throw new Error('User not found');
+    if (!user) throw CustomError.notFound('User not found');
 
     if (updateUserDto.nationalityId) {
       const nationality = await this.nationalityRepository.findOneById(
         updateUserDto.nationalityId,
       );
-      if (!nationality) throw new Error('Nationality not found');
+      if (!nationality) throw CustomError.notFound('Nationality not found');
       user.setNationality(nationality || user.getNationality());
     }
 

@@ -12,7 +12,7 @@ export class RankRepositoryImp implements RankRepository {
       data: {
         number: rank.getNumber(),
         name: rank.getName(),
-        required_xp: rank.getRequiredXp(),
+        requiredXp: rank.getRequiredXp(),
         image: rank.getImage(),
       },
     });
@@ -21,7 +21,7 @@ export class RankRepositoryImp implements RankRepository {
     const ranksBd = await this.prisma.rank.findMany();
     return ranksBd.map(
       (rank) =>
-        new Rank(rank.id, rank.number, rank.name, rank.required_xp, rank.image),
+        new Rank(rank.id, rank.number, rank.name, rank.requiredXp, rank.image),
     );
   }
   async findOneById(id: number): Promise<Rank | null> {
@@ -35,7 +35,7 @@ export class RankRepositoryImp implements RankRepository {
       rank.id,
       rank.number,
       rank.name,
-      rank.required_xp,
+      rank.requiredXp,
       rank.image,
     );
   }
@@ -47,7 +47,7 @@ export class RankRepositoryImp implements RankRepository {
       data: {
         number: rank.getNumber(),
         name: rank.getName(),
-        required_xp: rank.getRequiredXp(),
+        requiredXp: rank.getRequiredXp(),
         image: rank.getImage(),
       },
     });
@@ -73,7 +73,7 @@ export class RankRepositoryImp implements RankRepository {
       rank.id,
       rank.number,
       rank.name,
-      rank.required_xp,
+      rank.requiredXp,
       rank.image,
     );
   }

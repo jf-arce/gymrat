@@ -6,13 +6,12 @@ import {
   Patch,
   Param,
   Delete,
-  HttpException,
-  HttpStatus,
 } from '@nestjs/common';
 import { UsersService } from '../application/users.service';
 import { CreateUserDto } from '../application/dto/create-user.dto';
-import { GetUserDto } from '../application/dto/get-user.dto';
 import { UpdateUserDto } from '../application/dto/update-user.dto';
+import { HandleError } from 'src/modules/shared/errors/handle.error';
+import { GetUserDto } from '../application/dto/get-user.dto';
 
 @Controller('api/users')
 export class UsersController {
@@ -24,31 +23,45 @@ export class UsersController {
       await this.usersService.create(createUserDto);
       return { message: 'Usuario creado con éxito' };
     } catch (error) {
-      if (error instanceof Error) {
-        throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-      }
-      return { message: 'Error al crear el usuario' };
+      throw HandleError.throw(error);
     }
   }
 
   @Get()
   async findAll(): Promise<GetUserDto[]> {
-    const users = await this.usersService.findAll();
-    return users;
+    try {
+      const users = await this.usersService.findAll();
+      return users;
+    } catch (error) {
+      throw HandleError.throw(error);
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOneById(id);
+  async findOne(@Param('id') id: string) {
+    try {
+      const user = await this.usersService.findOneById(id);
+      return user;
+    } catch (error) {
+      throw HandleError.throw(error);
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(id, updateUserDto);
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    try {
+      await this.usersService.update(id, updateUserDto);
+    } catch (error) {
+      throw HandleError.throw(error);
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
+  async remove(@Param('id') id: string) {
+    try {
+      await this.usersService.remove(id);
+    } catch (error) {
+      throw HandleError.throw(error);
+    }
   }
 }

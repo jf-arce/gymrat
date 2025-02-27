@@ -18,13 +18,13 @@ export class UserRepositoryImp implements UserRepository {
         surname: user.getSurname(),
         role: user.getRole().getValue(),
         age: user.getAge(),
-        weight_kg: user.getWeightKg(),
-        height_cm: user.getHeightCm(),
+        weightKg: user.getWeightKg(),
+        heightCm: user.getHeightCm(),
         sex: user.getSex().getValue(),
         xp: user.getXp(),
         image: user.getImage(),
-        nationality_id: user.getNationality().getId(),
-        rank_id: user.getRank().getId(),
+        nationalityId: user.getNationality().getId(),
+        rankId: user.getRank().getId(),
       },
     });
   }
@@ -86,12 +86,12 @@ export class UserRepositoryImp implements UserRepository {
         surname: user.getSurname(),
         role: user.getRole().getValue(),
         age: user.getAge(),
-        weight_kg: user.getWeightKg(),
-        height_cm: user.getHeightCm(),
+        weightKg: user.getWeightKg(),
+        heightCm: user.getHeightCm(),
         sex: user.getSex().getValue(),
         xp: user.getXp(),
         image: user.getImage(),
-        nationality_id: user.getNationality().getId(),
+        nationalityId: user.getNationality().getId(),
       },
     });
   }

@@ -11,7 +11,7 @@ import { RanksService } from '../application/ranks.service';
 import { CreateRankDto } from '../application/dto/create-rank.dto';
 import { UpdateRankDto } from '../application/dto/update-rank.dto';
 
-@Controller('ranks')
+@Controller('api/ranks')
 export class RanksController {
   constructor(private readonly ranksService: RanksService) {}
 

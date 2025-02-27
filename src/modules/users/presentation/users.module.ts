@@ -16,5 +16,6 @@ import { RanksModule } from 'src/modules/ranks/presentation/ranks.module';
       useClass: UserRepositoryImp,
     },
   ],
+  exports: [UserRepository],
 })
 export class UsersModule {}

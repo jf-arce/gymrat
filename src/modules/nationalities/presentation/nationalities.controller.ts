@@ -11,7 +11,7 @@ import { NationalitiesService } from '../application/nationalities.service';
 import { CreateNationalityDto } from '../application/dto/create-nationality.dto';
 import { UpdateNationalityDto } from '../application/dto/update-nationality.dto';
 
-@Controller('nationalities')
+@Controller('api/nationalities')
 export class NationalitiesController {
   constructor(private readonly nationalitiesService: NationalitiesService) {}
 
