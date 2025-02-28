@@ -14,28 +14,48 @@ datasource db {
 }
 
 // Enums
+enum MuscleGroupEnum {
+  PECHO
+  HOMBROS
+  TRICEPS
+  ESPALDA
+  BICEPS
+  ABDOMINALES
+  CUADRICEPS
+  ISQUIOTIBIALES
+  GEMELOS
+  GLUTEOS
+}
+enum UserSexEnum {
+  HOMBRE
+  MUJER
+  OTRO
+}
+enum UserRoleEnum {
+  ADMIN
+  USER
+}
+
+// Tables
 model MuscleGroup{
   id Int @id @default(autoincrement())
-  name String
+  name String @unique
 
   @@map("muscle_groups")
 }
-
 model UserSex{
   id Int @id @default(autoincrement())
-  name String
+  name String @unique
 
   @@map("user_sexs")
 }
-
 model UserRole{
   id Int @id @default(autoincrement())
-  name String
+  name String @unique
 
   @@map("user_roles")
 }
 
-// Tables
 model Nationality{
   id Int @id @default(autoincrement())
   name String
@@ -58,26 +78,57 @@ model Rank{
 
 model User{
   id String @id @default(uuid())
+  username String @unique
   email String @unique
   password String 
   name String
   surname String
-  role String @default("user")
-  age Int
+  role UserRoleEnum @default(USER)
+  isActive Boolean @default(true)
+  age Int 
+  bio String?
   weightKg Float @map("weight_kg")
   heightCm Int @map("height_cm")
-  sex String
+  sex UserSexEnum
   xp Int @default(0)
+  level Int @default(1)
+  coins Int @default(0)
   image String?
   createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
   nationalityId Int @map("nationality_id")
   rankId Int @map("rank_id")
   nationalities Nationality @relation(fields: [nationalityId], references: [id], onDelete: Cascade)
   ranks Rank @relation(fields: [rankId], references: [id], onDelete: Cascade)
   routines Routine[]
   userBadges UserBadge[]
+  exercises Exercise[]
+  sessions Session[]
+  usersPurchases Purchase[]
 
   @@map("users")
+}
+
+model StoreItem{
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  price Int
+  image String?
+  userPurchases Purchase[]
+  
+  @@map("store_items")
+}
+
+model Purchase{
+  id Int @id @default(autoincrement())
+  purchaseDate DateTime @default(now()) @map("purchase_date")
+  userId String @map("user_id")
+  storeItemId Int @map("store_item_id")
+  users User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  storeItems StoreItem @relation(fields: [storeItemId], references: [id], onDelete: Cascade)
+
+  @@map("users_purchases")
 }
 
 model Badge{
@@ -85,6 +136,7 @@ model Badge{
   name String
   description String
   image String?
+  rewardCoins Int @map("reward_coins")
   userBadges UserBadge[]
 
   @@map("badges")
@@ -129,10 +181,13 @@ model Training{
 model Exercise{
   id Int @id @default(autoincrement())
   name String
-  muscleGroup String @map("muscle_group")
+  muscleGroup MuscleGroupEnum @map("muscle_group")
   notes String?
   image String?
+  userId String? @map("user_id")
+  users User? @relation(fields: [userId], references: [id], onDelete: Cascade)
   trainingExercises TrainingExercise[]
+  sessionExercises SessionExercise[]
 
   @@map("exercises")
 }
@@ -151,6 +206,8 @@ model TrainingExercise{
 
 model Set{
   id Int @id @default(autoincrement())
+  number Int
+  failed Boolean @default(false)
   weightKg Float @map("weight_kg")
   repetitions Int
   trainingExerciseId Int @map("training_exercise_id")
@@ -166,6 +223,7 @@ model Challenge{
   rewardXp Int @map("reward_xp")
   completed Boolean @default(false)
   image String?
+  rewardCoins Int @map("reward_coins")
   sessions Session[]
 
   @@map("challenges")
@@ -174,15 +232,43 @@ model Challenge{
 model Session{
   id Int @id @default(autoincrement())
   datetime DateTime @default(now())
+  feedback String?
   caloriesBurned Float @map("calories_burned")
   rewardXp Int @map("reward_xp")
   durationMinutes Int @map("duration_minutes")
   trainingId Int @map("training_id")
   challengeId Int @map("challenge_id")
+  userId String @map("user_id")
   training Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
   challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  users User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionExercises SessionExercise[]
 
   @@map("sessions")
+}
+
+model SessionExercise{
+  id Int @id @default(autoincrement())
+  rest Int
+  sessionId Int @map("session_id")
+  exerciseId Int @map("exercise_id")
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  exercise Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  sessionSets SessionSets[]
+
+  @@map("sessions_exercises")
+}
+
+model SessionSets{
+  id Int @id @default(autoincrement())
+  number Int
+  failed Boolean @default(false)
+  weightKg Float @map("weight_kg")
+  repetitions Int
+  sessionExerciseId Int @map("session_exercise_id")
+  sessionExercise SessionExercise @relation(fields: [sessionExerciseId], references: [id], onDelete: Cascade)
+
+  @@map("sessions_sets")
 }
 
 

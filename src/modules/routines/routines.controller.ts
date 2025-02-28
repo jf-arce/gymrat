@@ -7,12 +7,12 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { CreateRoutineDto } from '../application/dto/create-routine.dto';
-import { UpdateRoutineDto } from '../application/dto/update-routine.dto';
-import { RoutinesService } from '../application/routines.service';
 import { HandleError } from 'src/modules/shared/errors/handle.error';
+import { RoutinesService } from './routines.service';
+import { CreateRoutineDto } from './dto/create-routine.dto';
+import { UpdateRoutineDto } from './dto/update-routine.dto';
 
-@Controller('api/routines')
+@Controller('routines')
 export class RoutinesController {
   constructor(private readonly routinesService: RoutinesService) {}
 
@@ -21,7 +21,7 @@ export class RoutinesController {
     try {
       await this.routinesService.create(createRoutineDto);
     } catch (error) {
-      HandleError.throw(error);
+      HandleError.throwError(error);
     }
   }
 
@@ -30,7 +30,7 @@ export class RoutinesController {
     try {
       return await this.routinesService.findAll();
     } catch (error) {
-      HandleError.throw(error);
+      HandleError.throwError(error);
     }
   }
 
@@ -39,7 +39,7 @@ export class RoutinesController {
     try {
       return await this.routinesService.findOne(+id);
     } catch (error) {
-      HandleError.throw(error);
+      HandleError.throwError(error);
     }
   }
 
@@ -51,7 +51,7 @@ export class RoutinesController {
     try {
       return await this.routinesService.update(+id, updateRoutineDto);
     } catch (error) {
-      HandleError.throw(error);
+      HandleError.throwError(error);
     }
   }
 
@@ -60,7 +60,7 @@ export class RoutinesController {
     try {
       return await this.routinesService.remove(+id);
     } catch (error) {
-      HandleError.throw(error);
+      HandleError.throwError(error);
     }
   }
 }

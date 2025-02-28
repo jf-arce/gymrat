@@ -7,11 +7,11 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { NationalitiesService } from '../application/nationalities.service';
-import { CreateNationalityDto } from '../application/dto/create-nationality.dto';
-import { UpdateNationalityDto } from '../application/dto/update-nationality.dto';
+import { NationalitiesService } from './nationalities.service';
+import { CreateNationalityDto } from './dto/create-nationality.dto';
+import { UpdateNationalityDto } from './dto/update-nationality.dto';
 
-@Controller('api/nationalities')
+@Controller('nationalities')
 export class NationalitiesController {
   constructor(private readonly nationalitiesService: NationalitiesService) {}
 

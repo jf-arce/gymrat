@@ -7,11 +7,11 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { RanksService } from '../application/ranks.service';
-import { CreateRankDto } from '../application/dto/create-rank.dto';
-import { UpdateRankDto } from '../application/dto/update-rank.dto';
+import { RanksService } from './ranks.service';
+import { CreateRankDto } from './dto/create-rank.dto';
+import { UpdateRankDto } from './dto/update-rank.dto';
 
-@Controller('api/ranks')
+@Controller('ranks')
 export class RanksController {
   constructor(private readonly ranksService: RanksService) {}
 
