@@ -63,4 +63,13 @@ export class UsersController {
       HandleError.throwError(error);
     }
   }
+
+  @Patch('restore/:id')
+  async restore(@Param('id') id: string) {
+    try {
+      await this.usersService.restore(id);
+    } catch (error) {
+      HandleError.throwError(error);
+    }
+  }
 }

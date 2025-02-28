@@ -131,7 +131,18 @@ export class UsersService {
         id,
       },
       data: {
-        isActive: false, // Soft delete
+        deletedAt: new Date(),
+      },
+    });
+  }
+
+  async restore(id: string) {
+    await this.prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        deletedAt: null,
       },
     });
   }

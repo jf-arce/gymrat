@@ -8,7 +8,6 @@ export class UserEntity implements PrismaUser {
   password: string;
   surname: string;
   role: $Enums.UserRoleEnum;
-  isActive: boolean;
   age: number;
   bio: string | null;
   weightKg: number;
@@ -20,6 +19,7 @@ export class UserEntity implements PrismaUser {
   image: string | null;
   createdAt: Date;
   updatedAt: Date;
+  deletedAt: Date | null;
   nationalityId: number;
   rankId: number;
 

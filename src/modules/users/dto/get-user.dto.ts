@@ -7,6 +7,7 @@ export class GetUserDto {
   name: string;
   surname: string;
   age: number;
+  bio: string | null;
   weightKg: number;
   heightCm: number;
   sex: $Enums.UserSexEnum;
@@ -16,6 +17,7 @@ export class GetUserDto {
   image: string | null;
   createdAt: Date;
   updatedAt: Date;
+  deletedAt: Date | null;
   nationalities: { name: string; flag: string | null };
   ranks: {
     name: string;
@@ -34,6 +36,7 @@ export class GetUserDto {
     this.name = user.name;
     this.surname = user.surname;
     this.age = user.age;
+    this.bio = user.bio;
     this.weightKg = user.weightKg;
     this.heightCm = user.heightCm;
     this.sex = user.sex;
@@ -43,6 +46,7 @@ export class GetUserDto {
     this.image = user.image;
     this.createdAt = user.createdAt;
     this.updatedAt = user.updatedAt;
+    this.deletedAt = user.deletedAt;
     this.nationalities = {
       name: user.nationalities.name,
       flag: user.nationalities.flag,
