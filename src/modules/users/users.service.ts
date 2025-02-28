@@ -1,30 +1,33 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { PrismaService } from '../shared/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { GetUserDto } from './dto/get-user.dto';
-import { CustomError } from 'src/modules/shared/errors/custom-error';
 import { $Enums } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<void> {
     const userExists = await this.prisma.user.findUnique({
       where: {
         email: createUserDto.email,
       },
     });
-    if (userExists) throw CustomError.badRequest('User already exists');
+    if (userExists) throw new BadRequestException('User already exists');
 
     const lowestRank = await this.prisma.rank.findUnique({
       where: {
         number: 1,
       },
     });
-    if (!lowestRank) throw CustomError.notFound('Rank not found');
+    if (!lowestRank) throw new NotFoundException('Lowest rank not found');
 
     await this.prisma.user.create({
       data: {
@@ -55,7 +58,7 @@ export class UsersService {
         ranks: true,
       },
     });
-    if (users.length === 0) throw CustomError.notFound('Users not found');
+    if (users.length === 0) throw new NotFoundException('No users found');
 
     const usersDto = users.map((user) => {
       return GetUserDto.create(user);
@@ -73,7 +76,7 @@ export class UsersService {
         ranks: true,
       },
     });
-    if (!user) throw CustomError.notFound('User not found');
+    if (!user) throw new NotFoundException('User not found');
     return GetUserDto.create(user);
   }
 
@@ -87,17 +90,17 @@ export class UsersService {
         ranks: true,
       },
     });
-    if (!user) throw CustomError.notFound('User not found');
+    if (!user) throw new NotFoundException('User not found');
     return GetUserDto.create(user);
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<void> {
     const user = await this.prisma.user.findUnique({
       where: {
         id,
       },
     });
-    if (!user) throw CustomError.notFound('User not found');
+    if (!user) throw new NotFoundException('User not found');
 
     if (updateUserDto.nationalityId) {
       const nationality = await this.prisma.nationality.findUnique({
@@ -105,7 +108,8 @@ export class UsersService {
           id: updateUserDto.nationalityId,
         },
       });
-      if (!nationality) throw CustomError.notFound('Nationality not found');
+      if (!nationality)
+        throw new NotFoundException("Nationality doesn't exist");
     }
 
     await this.prisma.user.update({
@@ -125,7 +129,14 @@ export class UsersService {
     });
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<void> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!user) throw new NotFoundException('User not found');
+
     await this.prisma.user.update({
       where: {
         id,
@@ -136,7 +147,14 @@ export class UsersService {
     });
   }
 
-  async restore(id: string) {
+  async restore(id: string): Promise<void> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!user) throw new NotFoundException('User not found');
+
     await this.prisma.user.update({
       where: {
         id,
