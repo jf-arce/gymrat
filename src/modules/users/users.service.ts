@@ -1,14 +1,11 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { PrismaService } from '../shared/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { GetUserDto } from './dto/get-user.dto';
 import { $Enums } from '@prisma/client';
+import { ErrorHandler } from 'src/utils/error.handler';
 
 @Injectable()
 export class UsersService {
@@ -20,14 +17,24 @@ export class UsersService {
         email: createUserDto.email,
       },
     });
-    if (userExists) throw new BadRequestException('User already exists');
+    if (userExists) {
+      throw ErrorHandler.newError({
+        type: 'CONFLICT',
+        message: 'User already exists',
+      });
+    }
 
     const lowestRank = await this.prisma.rank.findUnique({
       where: {
         number: 1,
       },
     });
-    if (!lowestRank) throw new NotFoundException('Lowest rank not found');
+    if (!lowestRank) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'Lowest rank not found',
+      });
+    }
 
     await this.prisma.user.create({
       data: {
@@ -58,7 +65,12 @@ export class UsersService {
         ranks: true,
       },
     });
-    if (users.length === 0) throw new NotFoundException('No users found');
+    if (users.length === 0) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'No users found',
+      });
+    }
 
     const usersDto = users.map((user) => {
       return GetUserDto.create(user);
@@ -76,7 +88,13 @@ export class UsersService {
         ranks: true,
       },
     });
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'User not found',
+      });
+    }
+
     return GetUserDto.create(user);
   }
 
@@ -90,7 +108,13 @@ export class UsersService {
         ranks: true,
       },
     });
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'User not found',
+      });
+    }
+
     return GetUserDto.create(user);
   }
 
@@ -100,7 +124,12 @@ export class UsersService {
         id,
       },
     });
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'User not found',
+      });
+    }
 
     if (updateUserDto.nationalityId) {
       const nationality = await this.prisma.nationality.findUnique({
@@ -108,8 +137,12 @@ export class UsersService {
           id: updateUserDto.nationalityId,
         },
       });
-      if (!nationality)
-        throw new NotFoundException("Nationality doesn't exist");
+      if (!nationality) {
+        throw ErrorHandler.newError({
+          type: 'NOT_FOUND',
+          message: 'Nationality not found',
+        });
+      }
     }
 
     await this.prisma.user.update({
@@ -135,7 +168,12 @@ export class UsersService {
         id,
       },
     });
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'User not found',
+      });
+    }
 
     await this.prisma.user.update({
       where: {
@@ -153,7 +191,12 @@ export class UsersService {
         id,
       },
     });
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'User not found',
+      });
+    }
 
     await this.prisma.user.update({
       where: {

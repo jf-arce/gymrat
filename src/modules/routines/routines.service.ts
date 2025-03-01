@@ -1,13 +1,9 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateRoutineDto } from './dto/create-routine.dto';
 import { UpdateRoutineDto } from './dto/update-routine.dto';
-import { CustomError } from 'src/modules/shared/errors/custom-error';
 import { PrismaService } from 'src/modules/shared/prisma/prisma.service';
 import { Routine } from '@prisma/client';
+import { ErrorHandler } from 'src/utils/error.handler';
 
 @Injectable()
 export class RoutinesService {
@@ -19,7 +15,12 @@ export class RoutinesService {
         id: createRoutineDto.userId,
       },
     });
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'User not found',
+      });
+    }
 
     const routine = await this.prisma.routine.findFirst({
       where: {
@@ -27,13 +28,18 @@ export class RoutinesService {
         name: createRoutineDto.name,
       },
     });
-    if (routine) throw new BadRequestException('Routine already exists');
+    if (routine) {
+      throw ErrorHandler.newError({
+        type: 'CONFLICT',
+        message: 'Routine already exists',
+      });
+    }
 
     await this.prisma.routine.create({
       data: {
         name: createRoutineDto.name,
         isCurrent: false,
-        nextTraining: 1,
+        nextWorkout: 1,
         userId: createRoutineDto.userId,
       },
     });
@@ -41,7 +47,13 @@ export class RoutinesService {
 
   async findAll(): Promise<Routine[]> {
     const routines = await this.prisma.routine.findMany();
-    if (routines.length === 0) throw new NotFoundException('No routines found');
+    if (routines.length === 0) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'No routines found',
+      });
+    }
+
     return routines;
   }
 
@@ -51,7 +63,13 @@ export class RoutinesService {
         id,
       },
     });
-    if (!routine) throw CustomError.notFound('Routine not found');
+    if (!routine) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'Routine not found',
+      });
+    }
+
     return routine;
   }
 
@@ -61,7 +79,12 @@ export class RoutinesService {
         id,
       },
     });
-    if (!routine) throw CustomError.notFound('Routine not found');
+    if (!routine) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'Routine not found',
+      });
+    }
 
     await this.prisma.routine.update({
       where: {
@@ -75,6 +98,18 @@ export class RoutinesService {
   }
 
   async remove(id: number): Promise<void> {
+    const routine = await this.prisma.routine.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!routine) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'Routine not found',
+      });
+    }
+
     await this.prisma.routine.delete({
       where: {
         id,

@@ -7,10 +7,10 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { HandleError } from 'src/modules/shared/errors/handle.error';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ErrorHandler } from 'src/utils/error.handler';
 
 @Controller('users')
 export class UsersController {
@@ -22,7 +22,7 @@ export class UsersController {
       await this.usersService.create(createUserDto);
       return { message: 'Usuario creado con éxito' };
     } catch (error) {
-      HandleError.throwError(error);
+      ErrorHandler.throwError(error);
     }
   }
 
@@ -32,7 +32,7 @@ export class UsersController {
       const users = await this.usersService.findAll();
       return users;
     } catch (error) {
-      HandleError.throwError(error);
+      ErrorHandler.throwError(error);
     }
   }
 
@@ -42,7 +42,7 @@ export class UsersController {
       const user = await this.usersService.findOneById(id);
       return user;
     } catch (error) {
-      HandleError.throwError(error);
+      ErrorHandler.throwError(error);
     }
   }
 
@@ -51,7 +51,7 @@ export class UsersController {
     try {
       await this.usersService.update(id, updateUserDto);
     } catch (error) {
-      HandleError.throwError(error);
+      ErrorHandler.throwError(error);
     }
   }
 
@@ -60,7 +60,7 @@ export class UsersController {
     try {
       await this.usersService.remove(id);
     } catch (error) {
-      HandleError.throwError(error);
+      ErrorHandler.throwError(error);
     }
   }
 
@@ -69,7 +69,7 @@ export class UsersController {
     try {
       await this.usersService.restore(id);
     } catch (error) {
-      HandleError.throwError(error);
+      ErrorHandler.throwError(error);
     }
   }
 }

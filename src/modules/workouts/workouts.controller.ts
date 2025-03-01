@@ -7,19 +7,20 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { RoutinesService } from './routines.service';
-import { CreateRoutineDto } from './dto/create-routine.dto';
-import { UpdateRoutineDto } from './dto/update-routine.dto';
+import { WorkoutsService } from './workouts.service';
+import { CreateWorkoutDto } from './dto/create-workout.dto';
+import { UpdateWorkoutDto } from './dto/update-workout.dto';
 import { ErrorHandler } from 'src/utils/error.handler';
 
-@Controller('routines')
-export class RoutinesController {
-  constructor(private readonly routinesService: RoutinesService) {}
+@Controller('workouts')
+export class WorkoutsController {
+  constructor(private readonly workoutsService: WorkoutsService) {}
 
   @Post()
-  async create(@Body() createRoutineDto: CreateRoutineDto) {
+  async create(@Body() createWorkoutDto: CreateWorkoutDto) {
     try {
-      await this.routinesService.create(createRoutineDto);
+      await this.workoutsService.create(createWorkoutDto);
+      return { message: 'Workout created successfully' };
     } catch (error) {
       ErrorHandler.throwError(error);
     }
@@ -28,7 +29,7 @@ export class RoutinesController {
   @Get()
   async findAll() {
     try {
-      return await this.routinesService.findAll();
+      return await this.workoutsService.findAll();
     } catch (error) {
       ErrorHandler.throwError(error);
     }
@@ -37,7 +38,7 @@ export class RoutinesController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
-      return await this.routinesService.findOne(+id);
+      return await this.workoutsService.findOne(+id);
     } catch (error) {
       ErrorHandler.throwError(error);
     }
@@ -46,10 +47,10 @@ export class RoutinesController {
   @Patch(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateRoutineDto: UpdateRoutineDto,
+    @Body() updateWorkoutDto: UpdateWorkoutDto,
   ) {
     try {
-      return await this.routinesService.update(+id, updateRoutineDto);
+      return await this.workoutsService.update(+id, updateWorkoutDto);
     } catch (error) {
       ErrorHandler.throwError(error);
     }
@@ -58,7 +59,7 @@ export class RoutinesController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     try {
-      return await this.routinesService.remove(+id);
+      return await this.workoutsService.remove(+id);
     } catch (error) {
       ErrorHandler.throwError(error);
     }
