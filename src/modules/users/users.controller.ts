@@ -22,7 +22,7 @@ export class UsersController {
       await this.usersService.create(createUserDto);
       return { message: 'Usuario creado con éxito' };
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 
@@ -32,7 +32,7 @@ export class UsersController {
       const users = await this.usersService.findAll();
       return users;
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 
@@ -42,7 +42,7 @@ export class UsersController {
       const user = await this.usersService.findOneById(id);
       return user;
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 
@@ -51,7 +51,7 @@ export class UsersController {
     try {
       await this.usersService.update(id, updateUserDto);
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 
@@ -60,7 +60,7 @@ export class UsersController {
     try {
       await this.usersService.remove(id);
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 
@@ -69,7 +69,7 @@ export class UsersController {
     try {
       await this.usersService.restore(id);
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 }

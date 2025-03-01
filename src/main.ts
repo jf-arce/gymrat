@@ -14,14 +14,16 @@ async function bootstrap() {
     Credentials: true,
   });
 
+  // Enables global validation
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, // Deletes unknown properties
       forbidNonWhitelisted: true, // Throws an error if unknown properties are found
       transform: true, // Automatically transforms payloads to DTOs
     }),
-  ); // Enables global validation
+  );
 
+  // Swagger setup
   const config = new DocumentBuilder()
     .setTitle('GymRat')
     .setDescription('The GymRat API description')
@@ -31,6 +33,9 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, documentFactory);
 
   const PORT = Number(configService.get<number>('port'));
-  await app.listen(PORT);
+  await app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Api Documentation running on http://localhost:${PORT}/api`);
+  });
 }
 bootstrap().catch((error) => console.error(error));

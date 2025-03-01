@@ -22,7 +22,7 @@ export class WorkoutsController {
       await this.workoutsService.create(createWorkoutDto);
       return { message: 'Workout created successfully' };
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 
@@ -31,7 +31,7 @@ export class WorkoutsController {
     try {
       return await this.workoutsService.findAll();
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 
@@ -40,7 +40,7 @@ export class WorkoutsController {
     try {
       return await this.workoutsService.findOne(+id);
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 
@@ -52,7 +52,7 @@ export class WorkoutsController {
     try {
       return await this.workoutsService.update(+id, updateWorkoutDto);
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 
@@ -61,7 +61,7 @@ export class WorkoutsController {
     try {
       return await this.workoutsService.remove(+id);
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 }

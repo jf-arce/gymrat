@@ -7,6 +7,9 @@ import { RanksModule } from './modules/ranks/ranks.module';
 import { WorkoutsModule } from './modules/workouts/workouts.module';
 import { ConfigModule } from '@nestjs/config';
 import { envs, envsValidationSchema } from './options/envs.config';
+import { ExercisesModule } from './modules/exercises/exercises.module';
+import { WorkoutsExercisesModule } from './modules/workouts-exercises/workouts-exercises.module';
+import { SetsModule } from './modules/sets/sets.module';
 
 @Module({
   imports: [
@@ -21,6 +24,9 @@ import { envs, envsValidationSchema } from './options/envs.config';
     RanksModule,
     RoutinesModule,
     WorkoutsModule,
+    ExercisesModule,
+    WorkoutsExercisesModule,
+    SetsModule,
   ],
   controllers: [],
   providers: [],

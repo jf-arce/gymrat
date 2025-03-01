@@ -57,6 +57,22 @@ export class RoutinesService {
     return routines;
   }
 
+  async findAllByUser(userId: string): Promise<Routine[]> {
+    const routines = await this.prisma.routine.findMany({
+      where: {
+        userId,
+      },
+    });
+    if (routines.length === 0) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'No routines found',
+      });
+    }
+
+    return routines;
+  }
+
   async findOne(id: number): Promise<Routine> {
     const routine = await this.prisma.routine.findUnique({
       where: {

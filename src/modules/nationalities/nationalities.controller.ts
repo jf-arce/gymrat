@@ -10,36 +10,60 @@ import {
 import { NationalitiesService } from './nationalities.service';
 import { CreateNationalityDto } from './dto/create-nationality.dto';
 import { UpdateNationalityDto } from './dto/update-nationality.dto';
+import { ErrorHandler } from 'src/utils/error.handler';
 
 @Controller('nationalities')
 export class NationalitiesController {
   constructor(private readonly nationalitiesService: NationalitiesService) {}
 
   @Post()
-  create(@Body() createNationalityDto: CreateNationalityDto) {
-    return this.nationalitiesService.create(createNationalityDto);
+  async create(@Body() createNationalityDto: CreateNationalityDto) {
+    try {
+      await this.nationalitiesService.create(createNationalityDto);
+      return { message: 'Nationality created successfully' };
+    } catch (error) {
+      throw ErrorHandler.throwError(error);
+    }
   }
 
   @Get()
-  findAll() {
-    return this.nationalitiesService.findAll();
+  async findAll() {
+    try {
+      return await this.nationalitiesService.findAll();
+    } catch (error) {
+      throw ErrorHandler.throwError(error);
+    }
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.nationalitiesService.findOne(+id);
+  @Get(':name')
+  async findOne(@Param('name') name: string) {
+    try {
+      return await this.nationalitiesService.findOne(name);
+    } catch (error) {
+      throw ErrorHandler.throwError(error);
+    }
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
+  @Patch(':name')
+  async update(
+    @Param('name') name: string,
     @Body() updateNationalityDto: UpdateNationalityDto,
   ) {
-    return this.nationalitiesService.update(+id, updateNationalityDto);
+    try {
+      await this.nationalitiesService.update(name, updateNationalityDto);
+      return { message: 'Nationality updated successfully' };
+    } catch (error) {
+      throw ErrorHandler.throwError(error);
+    }
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.nationalitiesService.remove(+id);
+  @Delete(':name')
+  async remove(@Param('name') name: string) {
+    try {
+      await this.nationalitiesService.remove(name);
+      return { message: 'Nationality deleted successfully' };
+    } catch (error) {
+      throw ErrorHandler.throwError(error);
+    }
   }
 }

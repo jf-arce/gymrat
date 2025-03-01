@@ -20,17 +20,27 @@ export class RoutinesController {
   async create(@Body() createRoutineDto: CreateRoutineDto) {
     try {
       await this.routinesService.create(createRoutineDto);
+      return { message: 'Routine created successfully' };
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 
   @Get()
   async findAll() {
     try {
-      return await this.routinesService.findAll();
+      await this.routinesService.findAll();
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
+    }
+  }
+
+  @Get(':userId')
+  async findAllByUser(@Param('userId') userId: string) {
+    try {
+      return await this.routinesService.findAllByUser(userId);
+    } catch (error) {
+      throw ErrorHandler.throwError(error);
     }
   }
 
@@ -39,7 +49,7 @@ export class RoutinesController {
     try {
       return await this.routinesService.findOne(+id);
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 
@@ -49,18 +59,20 @@ export class RoutinesController {
     @Body() updateRoutineDto: UpdateRoutineDto,
   ) {
     try {
-      return await this.routinesService.update(+id, updateRoutineDto);
+      await this.routinesService.update(+id, updateRoutineDto);
+      return { message: 'Routine updated successfully' };
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
     try {
-      return await this.routinesService.remove(+id);
+      await this.routinesService.remove(+id);
+      return { message: 'Routine deleted successfully' };
     } catch (error) {
-      ErrorHandler.throwError(error);
+      throw ErrorHandler.throwError(error);
     }
   }
 }

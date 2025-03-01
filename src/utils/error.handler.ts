@@ -30,18 +30,18 @@ export class ErrorHandler extends Error {
 
   static throwError(error: any) {
     if (error instanceof HttpException) {
-      throw error;
+      return error;
     }
 
     if (error instanceof ErrorHandler) {
       const { type, message } = error;
-      throw new HttpException(message, HttpStatus[type]);
+      return new HttpException(message, HttpStatus[type]);
     }
 
     if (error instanceof Error) {
-      throw new InternalServerErrorException(error.message);
+      return new InternalServerErrorException(error.message);
     }
 
-    throw new InternalServerErrorException('Internal Server Error');
+    return new InternalServerErrorException('Internal Server Error');
   }
 }
