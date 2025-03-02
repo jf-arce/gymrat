@@ -35,6 +35,15 @@ export class WorkoutsController {
     }
   }
 
+  @Get('routine/:id')
+  async findAllByRoutine(@Param('id') routineId: string) {
+    try {
+      return await this.workoutsService.findAllByRoutine(+routineId);
+    } catch (error) {
+      throw ErrorHandler.throwError(error);
+    }
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {

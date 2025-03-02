@@ -54,6 +54,34 @@ export class WorkoutsService {
     return workouts;
   }
 
+  async findAllByRoutine(routineId: number) {
+    const routine = await this.prisma.routine.findUnique({
+      where: { id: routineId },
+    });
+    if (!routine) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'Routine not found',
+      });
+    }
+
+    const workouts = await this.prisma.workout.findMany({
+      where: { routineId },
+    });
+    if (workouts.length === 0) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'No workouts found',
+      });
+    }
+
+    return workouts.map((workout) => ({
+      id: workout.id,
+      number: workout.number,
+      name: workout.name,
+    }));
+  }
+
   async findOne(id: number): Promise<Workout> {
     const workout = await this.prisma.workout.findUnique({
       where: { id },

@@ -1,41 +1,27 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
+import { swaggerConfig } from './options/swagger.config';
+import { globalPipesConfig } from './options/global-pipes.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  app.setGlobalPrefix('api');
 
+  app.setGlobalPrefix('api');
   app.enableCors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3001'],
     Credentials: true,
   });
 
-  // Enables global validation
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true, // Deletes unknown properties
-      forbidNonWhitelisted: true, // Throws an error if unknown properties are found
-      transform: true, // Automatically transforms payloads to DTOs
-    }),
-  );
-
-  // Swagger setup
-  const config = new DocumentBuilder()
-    .setTitle('GymRat')
-    .setDescription('The GymRat API description')
-    .setVersion('1.0')
-    .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory);
+  globalPipesConfig(app); // Enables global validation
+  swaggerConfig(app);
 
   const PORT = Number(configService.get<number>('port'));
   await app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
     console.log(`Api Documentation running on http://localhost:${PORT}/api`);
+    console.log(`Api Documentation JSON on http://localhost:${PORT}/api-json`);
   });
 }
 bootstrap().catch((error) => console.error(error));

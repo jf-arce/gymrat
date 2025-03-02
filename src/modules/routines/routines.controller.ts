@@ -29,13 +29,13 @@ export class RoutinesController {
   @Get()
   async findAll() {
     try {
-      await this.routinesService.findAll();
+      return await this.routinesService.findAll();
     } catch (error) {
       throw ErrorHandler.throwError(error);
     }
   }
 
-  @Get(':userId')
+  @Get('user/:userId')
   async findAllByUser(@Param('userId') userId: string) {
     try {
       return await this.routinesService.findAllByUser(userId);

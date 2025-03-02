@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { CreateRoutineDto } from './dto/create-routine.dto';
 import { UpdateRoutineDto } from './dto/update-routine.dto';
 import { PrismaService } from 'src/modules/shared/prisma/prisma.service';
-import { Routine } from '@prisma/client';
 import { ErrorHandler } from 'src/utils/error.handler';
+import { RoutineMapper } from './mapper/routine.mapper';
+import { GetRoutineDto } from './dto/get-routine.dto';
 
 @Injectable()
 export class RoutinesService {
@@ -45,22 +46,10 @@ export class RoutinesService {
     });
   }
 
-  async findAll(): Promise<Routine[]> {
-    const routines = await this.prisma.routine.findMany();
-    if (routines.length === 0) {
-      throw ErrorHandler.newError({
-        type: 'NOT_FOUND',
-        message: 'No routines found',
-      });
-    }
-
-    return routines;
-  }
-
-  async findAllByUser(userId: string): Promise<Routine[]> {
+  async findAll(): Promise<GetRoutineDto[]> {
     const routines = await this.prisma.routine.findMany({
-      where: {
-        userId,
+      include: {
+        users: true,
       },
     });
     if (routines.length === 0) {
@@ -70,13 +59,35 @@ export class RoutinesService {
       });
     }
 
-    return routines;
+    return RoutineMapper.toArrayGetDto(routines);
   }
 
-  async findOne(id: number): Promise<Routine> {
+  async findAllByUser(userId: string): Promise<GetRoutineDto[]> {
+    const routines = await this.prisma.routine.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        users: true,
+      },
+    });
+    if (routines.length === 0) {
+      throw ErrorHandler.newError({
+        type: 'NOT_FOUND',
+        message: 'No routines found',
+      });
+    }
+
+    return RoutineMapper.toArrayGetDto(routines);
+  }
+
+  async findOne(id: number): Promise<GetRoutineDto> {
     const routine = await this.prisma.routine.findUnique({
       where: {
         id,
+      },
+      include: {
+        users: true,
       },
     });
     if (!routine) {
@@ -86,7 +97,7 @@ export class RoutinesService {
       });
     }
 
-    return routine;
+    return RoutineMapper.toGetDto(routine);
   }
 
   async update(id: number, updateRoutineDto: UpdateRoutineDto): Promise<void> {
