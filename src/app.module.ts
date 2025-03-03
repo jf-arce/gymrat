@@ -10,6 +10,7 @@ import { envs, envsValidationSchema } from './options/envs.config';
 import { ExercisesModule } from './modules/exercises/exercises.module';
 import { WorkoutsExercisesModule } from './modules/workouts-exercises/workouts-exercises.module';
 import { SetsModule } from './modules/sets/sets.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SetsModule } from './modules/sets/sets.module';
     }),
     PrismaModule,
     UsersModule,
+    AuthModule,
     NationalitiesModule,
     RanksModule,
     RoutinesModule,

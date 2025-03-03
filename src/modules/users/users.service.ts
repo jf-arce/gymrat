@@ -38,18 +38,8 @@ export class UsersService {
 
     await this.prisma.user.create({
       data: {
+        ...createUserDto,
         id: randomUUID(),
-        username: createUserDto.username,
-        email: createUserDto.email,
-        password: createUserDto.password,
-        name: createUserDto.name,
-        surname: createUserDto.surname,
-        age: createUserDto.age,
-        weightKg: createUserDto.weightKg,
-        heightCm: createUserDto.heightCm,
-        sex: createUserDto.sex,
-        image: createUserDto.image,
-        nationalityId: createUserDto.nationalityId,
         rankId: lowestRank.id,
       },
     });
@@ -147,18 +137,7 @@ export class UsersService {
 
     await this.prisma.user.update({
       where: { id },
-      data: {
-        email: updateUserDto.email,
-        username: updateUserDto.username,
-        name: updateUserDto.name,
-        surname: updateUserDto.surname,
-        age: updateUserDto.age,
-        weightKg: updateUserDto.weightKg,
-        heightCm: updateUserDto.heightCm,
-        sex: updateUserDto.sex,
-        image: updateUserDto.image,
-        nationalityId: updateUserDto.nationalityId,
-      },
+      data: updateUserDto,
     });
   }
 
