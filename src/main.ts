@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { swaggerConfig } from './options/swagger.config';
 import { globalPipesConfig } from './options/global-pipes.config';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,6 +14,7 @@ async function bootstrap() {
     origin: ['http://localhost:3001'],
     Credentials: true,
   });
+  app.use(cookieParser());
 
   globalPipesConfig(app); // Enables global validation
   swaggerConfig(app);

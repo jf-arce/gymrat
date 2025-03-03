@@ -4,6 +4,7 @@ import { SwaggerTheme, SwaggerThemeNameEnum } from 'swagger-themes';
 
 export const swaggerConfig = (app: INestApplication) => {
   const config = new DocumentBuilder()
+    .addCookieAuth()
     .setTitle('GymRat')
     .setDescription('The GymRat API description')
     .setVersion('1.0')
