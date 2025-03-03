@@ -23,18 +23,32 @@ export class ExercisesService {
           message: 'User not found',
         });
       }
-    }
 
-    const exercise = await this.prisma.exercise.findFirst({
-      where: {
-        name: createExerciseDto.name,
-      },
-    });
-    if (exercise) {
-      throw ErrorHandler.newError({
-        type: 'CONFLICT',
-        message: 'Exercise already exists',
+      const exercise = await this.prisma.exercise.findFirst({
+        where: {
+          name: createExerciseDto.name,
+          userId: createExerciseDto.userId,
+        },
       });
+      if (exercise) {
+        throw ErrorHandler.newError({
+          type: 'CONFLICT',
+          message: 'Exercise already exists',
+        });
+      }
+    } else {
+      const exercise = await this.prisma.exercise.findFirst({
+        where: {
+          name: createExerciseDto.name,
+          userId: null,
+        },
+      });
+      if (exercise) {
+        throw ErrorHandler.newError({
+          type: 'CONFLICT',
+          message: 'Exercise already exists',
+        });
+      }
     }
 
     await this.prisma.exercise.create({

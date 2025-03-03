@@ -207,7 +207,6 @@ model WorkoutExercise{
 model Set{
   id Int @id @default(autoincrement())
   number Int
-  failed Boolean @default(false)
   weightKg Float @map("weight_kg")
   repetitions Int
   workoutExerciseId Int @map("workout_exercise_id")
@@ -233,7 +232,6 @@ model Session{
   id Int @id @default(autoincrement())
   datetime DateTime @default(now())
   feedback String?
-  caloriesBurned Float @map("calories_burned")
   rewardXp Int @map("reward_xp")
   durationMinutes Int @map("duration_minutes")
   workoutId Int @map("workout_id")

@@ -10,6 +10,7 @@ import {
 import { WorkoutsExercisesService } from './workouts-exercises.service';
 import { CreateWorkoutsExerciseDto } from './dto/create-workouts-exercise.dto';
 import { UpdateWorkoutsExerciseDto } from './dto/update-workouts-exercise.dto';
+import { ErrorHandler } from 'src/utils/error.handler';
 
 @Controller('workouts-exercises')
 export class WorkoutsExercisesController {
@@ -18,8 +19,13 @@ export class WorkoutsExercisesController {
   ) {}
 
   @Post()
-  create(@Body() createWorkoutsExerciseDto: CreateWorkoutsExerciseDto) {
-    return this.workoutsExercisesService.create(createWorkoutsExerciseDto);
+  async create(@Body() createWorkoutsExerciseDto: CreateWorkoutsExerciseDto) {
+    try {
+      await this.workoutsExercisesService.create(createWorkoutsExerciseDto);
+      return { message: 'Workout exercise created successfully' };
+    } catch (error) {
+      throw ErrorHandler.throwError(error);
+    }
   }
 
   @Get()
@@ -30,6 +36,15 @@ export class WorkoutsExercisesController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.workoutsExercisesService.findOne(+id);
+  }
+
+  @Get('workout/:id')
+  async findExercisesByWorkoutId(@Param('id') id: string) {
+    try {
+      return await this.workoutsExercisesService.findExercisesByWorkout(+id);
+    } catch (error) {
+      throw ErrorHandler.throwError(error);
+    }
   }
 
   @Patch(':id')

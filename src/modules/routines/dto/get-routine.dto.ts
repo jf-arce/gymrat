@@ -3,5 +3,5 @@ export class GetRoutineDto {
   name: string;
   isCurrent: boolean;
   nextWorkout: number;
-  userCompleteName: string;
+  user: string;
 }

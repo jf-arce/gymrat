@@ -10,7 +10,7 @@ export class RoutineMapper {
       name: routineEntity.name,
       isCurrent: routineEntity.isCurrent,
       nextWorkout: routineEntity.nextWorkout,
-      userCompleteName: `${routineEntity.users.name} ${routineEntity.users.surname}`,
+      user: `${routineEntity.users.name} ${routineEntity.users.surname}`,
     };
   }
 
