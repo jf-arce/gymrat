@@ -121,6 +121,13 @@ export class UsersService {
       });
     }
 
+    if (Object.keys(updateUserDto).length === 0) {
+      throw ErrorHandler.newError({
+        type: 'BAD_REQUEST',
+        message: 'The user was not modified, the request body is empty',
+      });
+    }
+
     if (updateUserDto.nationalityId) {
       const nationality = await this.prisma.nationality.findUnique({
         where: {

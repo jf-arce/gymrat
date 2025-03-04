@@ -7,7 +7,7 @@ import { ErrorHandler } from 'src/utils/error.handler';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '../users/entities/user.entity';
-import { JwtConstants, JwtPayload } from './jwt/jwt.constants';
+import { JwtConstants, JwtPayload } from './constants/jwt.constants';
 const SALT_ROUNDS = 10;
 
 @Injectable()
