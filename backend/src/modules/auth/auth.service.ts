@@ -29,11 +29,18 @@ export class AuthService {
   }
 
   async login(loginAuthDto: LoginAuthDto) {
-    const { password, email, username } = loginAuthDto;
+    const { password, emailOrUsername } = loginAuthDto;
 
     const user = await this.prisma.user.findFirst({
       where: {
-        OR: [{ email }, { username }],
+        OR: [
+          {
+            email: emailOrUsername,
+          },
+          {
+            username: emailOrUsername,
+          },
+        ],
       },
       include: {
         nationalities: true,
@@ -89,47 +96,61 @@ export class AuthService {
   }
 
   async refreshToken(refreshToken: string) {
-    const payloadDecoded = this.jwtService.verify<JwtPayload>(refreshToken, {
-      secret: this.jwtConstants.refreshTokenSecret,
-    });
-    if (!payloadDecoded) {
+    try {
+      const payloadDecoded = this.jwtService.verify<JwtPayload>(refreshToken, {
+        secret: this.jwtConstants.refreshTokenSecret,
+      });
+
+      const user = await this.prisma.user.findUnique({
+        where: {
+          id: payloadDecoded.sub,
+        },
+        include: {
+          nationalities: true,
+          ranks: true,
+        },
+      });
+      if (!user) {
+        throw ErrorHandler.newError({
+          type: 'UNAUTHORIZED',
+          message: 'User not found',
+        });
+      }
+
+      const userEntity = new UserEntity(user);
+
+      const newPayload: JwtPayload = {
+        sub: user.id,
+        username: user.username,
+        name: userEntity.getFullName(),
+        email: user.email,
+        role: user.role,
+      };
+
+      const newAccessToken = this.jwtService.sign(newPayload, {
+        secret: this.jwtConstants.accessTokenSecret,
+        expiresIn: this.jwtConstants.accessTokenExpiresIn,
+      });
+
+      return newAccessToken;
+    } catch {
       throw ErrorHandler.newError({
         type: 'UNAUTHORIZED',
         message: 'Invalid token',
       });
     }
+  }
 
-    const user = await this.prisma.user.findUnique({
-      where: {
-        id: payloadDecoded.sub,
-      },
-      include: {
-        nationalities: true,
-        ranks: true,
-      },
-    });
-    if (!user) {
+  verifySession(accessToken: string) {
+    try {
+      this.jwtService.verify<JwtPayload>(accessToken, {
+        secret: this.jwtConstants.accessTokenSecret,
+      });
+    } catch {
       throw ErrorHandler.newError({
         type: 'UNAUTHORIZED',
-        message: 'User not found',
+        message: 'Invalid token',
       });
     }
-
-    const userEntity = new UserEntity(user);
-
-    const newPayload: JwtPayload = {
-      sub: user.id,
-      username: user.username,
-      name: userEntity.getFullName(),
-      email: user.email,
-      role: user.role,
-    };
-
-    const newAccessToken = this.jwtService.sign(newPayload, {
-      secret: this.jwtConstants.accessTokenSecret,
-      expiresIn: this.jwtConstants.accessTokenExpiresIn,
-    });
-
-    return newAccessToken;
   }
 }
