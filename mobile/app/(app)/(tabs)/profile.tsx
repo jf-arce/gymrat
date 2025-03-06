@@ -1,10 +1,10 @@
 import { Button, Text } from "react-native";
 import { Stack } from "expo-router";
 import Screen from "@/modules/core/components/Screen";
-import { useSession } from "@/modules/context/AuthContext";
+import { useAuthStore } from "@/modules/auth/stores/auth.store";
 
 export default function ProfileScreen() {
-  const { signOut } = useSession();
+  const logOut = useAuthStore((state) => state.logOut);
 
   return (
     <Screen>
@@ -15,7 +15,7 @@ export default function ProfileScreen() {
         }}
       />
       <Text style={{ color: "white" }}>Perfil del usuario</Text>
-      <Button title="Cerrar sesión" onPress={signOut} />
+      <Button title="Cerrar sesión" onPress={logOut} />
     </Screen>
   );
 }

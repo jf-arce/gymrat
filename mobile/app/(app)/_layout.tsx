@@ -1,11 +1,21 @@
 import { Redirect, Stack } from "expo-router";
 import { ActivityIndicator, View } from "react-native";
 import { COLORS } from "@/constants/colors";
-import { useSession } from "@/modules/context/AuthContext";
 import { StyleSheet } from "react-native";
+import { useAuthStore } from "@/modules/auth/stores/auth.store";
+import { useEffect } from "react";
 
 export default function AppLayout() {
-  const { session, isLoading } = useSession();
+  const { authenticated } = useAuthStore((state) => state.authSession);
+  const isLoading = useAuthStore((state) => state.isLoading);
+  const checkSession = useAuthStore((state) => state.checkSession);
+
+  useEffect(() => {
+    const init = async () => {
+      await checkSession();
+    };
+    init();
+  }, []);
 
   if (isLoading) {
     return (
@@ -15,7 +25,7 @@ export default function AppLayout() {
     );
   }
 
-  if (!session) {
+  if (!authenticated) {
     return <Redirect href="/sign-in" />;
   }
 

@@ -1,4 +1,4 @@
-import { useSession } from "@/modules/context/AuthContext";
+import { useAuthStore } from "@/modules/auth/stores/auth.store";
 import Screen from "@/modules/core/components/Screen";
 import { useState } from "react";
 import { Text, TextInput, Button, View } from "react-native";
@@ -6,12 +6,14 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function SignInScreen() {
   const insets = useSafeAreaInsets();
-  const { signIn, isLoading, error } = useSession();
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
+  const logIn = useAuthStore((state) => state.logIn);
+  const isLoading = useAuthStore((state) => state.isLoading);
+  const error = useAuthStore((state) => state.error);
 
   const handleLogin = async () => {
-    await signIn(emailOrUsername, password);
+    await logIn(emailOrUsername, password);
   };
 
   return (
