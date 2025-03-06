@@ -2,110 +2,104 @@ import {
   useContext,
   createContext,
   type PropsWithChildren,
-  useState,
   useEffect,
+  useState,
 } from "react";
-import { useStorageState } from "../auth/hooks/useStorageState";
-import { authLogin } from "../auth/services/auth.service";
-import { SessionAuth } from "../auth/types/auth.types";
 import { router } from "expo-router";
 import { API_URL } from "@/constants/api";
+import { SessionAuth } from "../auth/types/auth.types";
+import { useStorageState } from "../auth/hooks/useStorageState";
+import { authLogin } from "../auth/services/auth.service";
 
-const AuthContext = createContext<{
-  signIn: (emailOrUsername: string, password: string) => void;
+type AuthContextType = {
+  signIn: (email: string, password: string) => Promise<void>;
   signOut: () => void;
-  session?: SessionAuth | null;
+  session: SessionAuth | null;
   isLoading: boolean;
-  error: string;
-  validateSessionLoading: boolean;
-}>({
-  signIn: () => null,
-  signOut: () => null,
+  error: string | null;
+};
+
+const AuthContext = createContext<AuthContextType>({
+  signIn: async () => {},
+  signOut: () => {},
   session: null,
-  isLoading: false,
-  error: "",
-  validateSessionLoading: false,
+  isLoading: true,
+  error: null,
 });
 
-// This hook can be used to access the user info.
 export function useSession() {
-  const value = useContext(AuthContext);
-  if (process.env.NODE_ENV !== "production") {
-    if (!value) {
-      throw new Error("useSession must be wrapped in a <SessionProvider />");
-    }
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useSession must be used within a SessionProvider");
   }
-
-  return value;
+  return context;
 }
 
 export function SessionProvider({ children }: PropsWithChildren) {
-  const [[isLoading, session], setSession] = useStorageState("session");
-  const [error, setError] = useState<string>("");
-  const [validateSessionLoading, setValidateSessionLoading] = useState(false);
+  const [[isLoading, storedSession], setStoredSession] =
+    useStorageState("session");
+  const [error, setError] = useState<string | null>(null);
 
+  // Parsear la sesión almacenada
+  const session = storedSession
+    ? (JSON.parse(storedSession) as SessionAuth)
+    : null;
+
+  // Verificar sesión al cargar
   useEffect(() => {
-    init();
-  }, []);
-
-  const init = async () => {
-    if (session) {
-      try {
-        setValidateSessionLoading(true);
-        const sessionAuth = JSON.parse(session);
-        const response = await fetch(`${API_URL}/auth/verify-session`, {
-          credentials: "include",
-          headers: {
-            Authorization: `Bearer ${sessionAuth.access_token}`,
-          },
-        });
-        if (!response.ok) {
-          const refreshToken = await fetch(`${API_URL}/auth/refresh`, {
-            credentials: "include",
-            headers: {
-              Authorization: `Bearer ${sessionAuth.refresh_token}`,
-            },
+    if (!isLoading && session) {
+      const verifySession = async () => {
+        try {
+          const response = await fetch(`${API_URL}/auth/verify-session`, {
+            headers: { Authorization: `Bearer ${session.accessToken}` },
           });
-          if (!refreshToken.ok) {
-            setSession(null);
-          } else {
-            const newSession = await refreshToken.json();
-            setSession(JSON.stringify(newSession));
+          if (!response.ok) throw new Error("Invalid session");
+        } catch {
+          try {
+            const refreshResponse = await fetch(`${API_URL}/auth/refresh`, {
+              method: "POST",
+              headers: { Authorization: `Bearer ${session.refreshToken}` },
+            });
+
+            if (!refreshResponse.ok) throw new Error("Refresh failed");
+
+            const newSession = await refreshResponse.json();
+            setStoredSession(JSON.stringify(newSession));
+          } catch {
+            setStoredSession(null);
+            router.replace("/sign-in");
           }
         }
-      } catch {
-        setSession(null);
-        router.replace("/sign-in");
-      } finally {
-        setValidateSessionLoading(false);
-      }
-    }
-  };
+      };
 
-  const singIn = async (emailOrUsername: string, password: string) => {
+      verifySession();
+    }
+  }, [isLoading, session]);
+
+  const signIn = async (email: string, password: string) => {
     try {
-      const sessionAuth = await authLogin(emailOrUsername, password);
-      setSession(JSON.stringify(sessionAuth));
+      const newSession = await authLogin(email, password);
+      setStoredSession(JSON.stringify(newSession));
       router.replace("/");
+      setError(null);
     } catch {
-      setError("Datos incorrectos");
+      setError("Credenciales inválidas");
     }
   };
 
-  const singOut = () => {
-    setSession(null);
+  const signOut = () => {
+    setStoredSession(null);
     router.replace("/sign-in");
   };
 
   return (
     <AuthContext.Provider
       value={{
-        signIn: singIn,
-        signOut: singOut,
+        session,
         isLoading,
-        session: session ? JSON.parse(session) : null,
         error,
-        validateSessionLoading,
+        signIn,
+        signOut,
       }}
     >
       {children}

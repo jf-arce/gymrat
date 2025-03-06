@@ -1,13 +1,18 @@
 import { Redirect, Stack } from "expo-router";
-import { Text } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { COLORS } from "@/constants/colors";
 import { useSession } from "@/modules/context/AuthContext";
+import { StyleSheet } from "react-native";
 
 export default function AppLayout() {
-  const { session, isLoading, validateSessionLoading } = useSession();
+  const { session, isLoading } = useSession();
 
-  if (isLoading || validateSessionLoading) {
-    return <Text>Loading...</Text>;
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
+      </View>
+    );
   }
 
   if (!session) {
@@ -30,3 +35,18 @@ export default function AppLayout() {
     />
   );
 }
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: COLORS.secondary,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: COLORS.secondary,
+  },
+});
