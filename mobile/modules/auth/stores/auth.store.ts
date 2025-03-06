@@ -50,7 +50,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       await secureStore.saveSession(sessionAuth);
       router.replace("/");
     } catch {
-      set({ error: "Credenciales incorrectas" });
+      set({ error: "Datos incorrectos" });
     } finally {
       set({ isLoading: false });
     }

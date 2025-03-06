@@ -20,6 +20,8 @@ export default function Index() {
       />
 
       <Text style={{ color: "white" }}>Bienvenido {user?.name}</Text>
+      <Text style={{ color: "white" }}>Nivel {user?.level}</Text>
+      <Text style={{ color: "white" }}>Rango {user?.level}</Text>
       {/* <Link href="/profile" asChild>
         <Pressable className="bg-blue-500 p-4 rounded-md">
           <Text>Go to profile</Text>
