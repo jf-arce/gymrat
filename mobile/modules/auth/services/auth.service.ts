@@ -10,7 +10,6 @@ export const authLogin = async (
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
     body: JSON.stringify({ emailOrUsername, password }),
   });
 

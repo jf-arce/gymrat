@@ -11,8 +11,19 @@ module.exports = {
     extend: {
       colors: {
         primary: "#C4EC39",
-        secondary: "#1F1F21",
-        white: "#FFFFFF",
+        secondary: "#121519",
+        white: "#F8F8F8",
+      },
+      fontFamily: {
+        "soliden-condensed": ["Soliden-Condensed", "sans-serif"],
+        "soliden-condensed-bold": ["Soliden-Condensed-Bold", "sans-serif"],
+        "soliden-regular": ["Soliden-Regular", "sans-serif"],
+        "soliden-bold": ["Soliden-Bold", "sans-serif"],
+        "soliden-expanded": ["Soliden-Expanded", "sans-serif"],
+        "soliden-expanded-bold": ["Soliden-Expanded-Bold", "sans-serif"],
+        "marios-black": ["marios-black", "sans-serif"],
+        "marios-regular": ["marios-regular", "sans-serif"],
+        "marios-semibold": ["marios-semibold", "sans-serif"],
       },
     },
   },

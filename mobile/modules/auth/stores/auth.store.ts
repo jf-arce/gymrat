@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { authLogin } from "../services/auth.service";
-import { SessionAuth, UserLogin } from "../types/auth.types";
+import { UserLogin } from "../types/auth.types";
 import axios from "axios";
 import { API_URL } from "@/constants/api";
 import { router } from "expo-router";

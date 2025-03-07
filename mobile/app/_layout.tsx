@@ -1,13 +1,13 @@
 import { Slot } from "expo-router";
 import "../global.css";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { FontProvider } from "@/modules/core/providers/font.provider";
 
 export default function RootLayout() {
   return (
-    <SafeAreaProvider>
+    <FontProvider>
       <StatusBar style="light" />
       <Slot />
-    </SafeAreaProvider>
+    </FontProvider>
   );
 }

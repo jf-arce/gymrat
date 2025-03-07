@@ -6,16 +6,25 @@ import {
   HomeIcon,
 } from "@/modules/core/components/Icons";
 import { COLORS } from "@/constants/colors";
+import { InfoIcon } from "@/modules/core/components/Icons";
+import { View } from "react-native";
 
 export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerShown: false,
+        headerStyle: {
+          backgroundColor: COLORS.secondary,
+        },
+        headerTintColor: COLORS.primary,
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
         tabBarActiveTintColor: COLORS.primary,
         tabBarStyle: {
           backgroundColor: COLORS.secondary,
           borderTopWidth: 0,
+          height: 60,
         },
       }}
     >
@@ -24,6 +33,12 @@ export default function TabsLayout() {
         options={{
           title: "Inicio",
           tabBarIcon: ({ color }) => <HomeIcon color={color} />,
+          headerTitle: "GYMRAT",
+          headerRight: () => (
+            <View className="pr-4">
+              <InfoIcon color={COLORS.primary} />
+            </View>
+          ),
         }}
       />
 

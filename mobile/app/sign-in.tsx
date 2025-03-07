@@ -23,7 +23,6 @@ export default function SignInScreen() {
   return (
     <Screen
       style={{
-        flex: 1,
         paddingLeft: 20,
         paddingRight: 20,
       }}

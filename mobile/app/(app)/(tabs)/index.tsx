@@ -1,34 +1,27 @@
-import { Text, Pressable } from "react-native";
-import ExercisePicker from "@/modules/exercises/components/ExercisePicker";
-import { Link, Stack } from "expo-router";
+import { ActivityIndicator, View } from "react-native";
 import Screen from "@/modules/core/components/Screen";
 import { useUser } from "@/modules/user/hooks/useUser";
+import { ShortcutsSlides } from "@/modules/home/components/ShortcutsSlides";
+import { UserInfoHome } from "@/modules/user/components/UserInfoHome";
+import { NextWorkoutCard } from "@/modules/home/components/NextWorkoutCard";
+import { COLORS } from "@/constants/colors";
 
 export default function Index() {
   const { user, isUserLoading } = useUser();
 
-  if (isUserLoading) {
-    return <Text style={{ color: "white" }}>Loading...</Text>;
+  if (isUserLoading || !user) {
+    return (
+      <View className="flex-1 justify-center items-center bg-secondary">
+        <ActivityIndicator size="large" color={COLORS.primary} />
+      </View>
+    );
   }
 
   return (
     <Screen>
-      <Stack.Screen
-        options={{
-          title: "Home",
-        }}
-      />
-
-      <Text style={{ color: "white" }}>Bienvenido {user?.name}</Text>
-      <Text style={{ color: "white" }}>Nivel {user?.level}</Text>
-      <Text style={{ color: "white" }}>Rango {user?.level}</Text>
-      {/* <Link href="/profile" asChild>
-        <Pressable className="bg-blue-500 p-4 rounded-md">
-          <Text>Go to profile</Text>
-        </Pressable>
-      </Link>
-
-      <ExercisePicker /> */}
+      <UserInfoHome user={user} />
+      <ShortcutsSlides />
+      <NextWorkoutCard />
     </Screen>
   );
 }

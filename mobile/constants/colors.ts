@@ -1,6 +1,6 @@
 export const COLORS = {
   primary: "#C4EC39", // Green Apple
-  secondary: "#1F1F21", // Black
+  secondary: "#121519", // Black
   tertiary: "#6637f2", // Purple
 
   success: "#28a745",

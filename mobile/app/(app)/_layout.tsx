@@ -1,7 +1,6 @@
 import { Redirect, Stack } from "expo-router";
 import { ActivityIndicator, View } from "react-native";
 import { COLORS } from "@/constants/colors";
-import { StyleSheet } from "react-native";
 import { useAuthStore } from "@/modules/auth/stores/auth.store";
 import { useEffect } from "react";
 
@@ -19,7 +18,7 @@ export default function AppLayout() {
 
   if (isLoading) {
     return (
-      <View style={styles.loadingContainer}>
+      <View className="flex-1 justify-center items-center bg-secondary">
         <ActivityIndicator size="large" color={COLORS.primary} />
       </View>
     );
@@ -32,31 +31,9 @@ export default function AppLayout() {
   return (
     <Stack
       screenOptions={{
-        headerStyle: {
-          backgroundColor: COLORS.secondary,
-        },
-        headerTintColor: COLORS.primary,
-        headerTitleStyle: {
-          fontWeight: "bold",
-        },
-        headerTitle: "Gym Rat",
-        headerTitleAlign: "center",
+        headerShown: false,
+        navigationBarColor: COLORS.secondary,
       }}
-    />
+    ></Stack>
   );
 }
-
-const styles = StyleSheet.create({
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: COLORS.secondary,
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: COLORS.secondary,
-  },
-});
