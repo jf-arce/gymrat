@@ -14,17 +14,22 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerStyle: {
-          backgroundColor: COLORS.secondary,
+          backgroundColor: COLORS.secondaryContrast,
         },
         headerTintColor: COLORS.primary,
         headerTitleStyle: {
-          fontWeight: "bold",
+          fontFamily: "marios-black",
         },
         tabBarActiveTintColor: COLORS.primary,
         tabBarStyle: {
-          backgroundColor: COLORS.secondary,
+          backgroundColor: COLORS.secondaryContrast,
           borderTopWidth: 0,
           height: 60,
+        },
+        tabBarLabelStyle: {
+          fontFamily: "clashgrotesk-medium",
+          fontSize: 12,
+          marginTop: 2,
         },
       }}
     >

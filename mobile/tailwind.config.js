@@ -11,19 +11,21 @@ module.exports = {
     extend: {
       colors: {
         primary: "#C4EC39",
-        secondary: "#121519",
+        secondary: "#121519", //Background
+        tertiary: "#5055c0",
         white: "#F8F8F8",
       },
       fontFamily: {
-        "soliden-condensed": ["Soliden-Condensed", "sans-serif"],
-        "soliden-condensed-bold": ["Soliden-Condensed-Bold", "sans-serif"],
-        "soliden-regular": ["Soliden-Regular", "sans-serif"],
-        "soliden-bold": ["Soliden-Bold", "sans-serif"],
-        "soliden-expanded": ["Soliden-Expanded", "sans-serif"],
-        "soliden-expanded-bold": ["Soliden-Expanded-Bold", "sans-serif"],
         "marios-black": ["marios-black", "sans-serif"],
         "marios-regular": ["marios-regular", "sans-serif"],
         "marios-semibold": ["marios-semibold", "sans-serif"],
+
+        "clashgrotesk-extralight": ["clashgrotesk-extralight", "sans-serif"],
+        "clashgrotesk-light": ["clashgrotesk-light", "sans-serif"],
+        "clashgrotesk-regular": ["clashgrotesk-regular", "sans-serif"],
+        "clashgrotesk-medium": ["clashgrotesk-medium", "sans-serif"],
+        "clashgrotesk-semibold": ["clashgrotesk-semibold", "sans-serif"],
+        "clashgrotesk-bold": ["clashgrotesk-bold", "sans-serif"],
       },
     },
   },

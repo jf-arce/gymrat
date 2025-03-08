@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateRoutineDto {
   @ApiProperty({ example: 'Tren superior' })
@@ -11,4 +11,8 @@ export class CreateRoutineDto {
   @IsNotEmpty()
   @IsString()
   userId: string;
+
+  @ApiProperty()
+  @IsBoolean()
+  isCurrent: boolean;
 }

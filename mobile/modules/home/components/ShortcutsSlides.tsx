@@ -59,7 +59,8 @@ export const ShortcutsSlides = () => {
               <Text style={{ color: "#fff" }}>⚙️</Text>
             )}
             <TextFont
-              className={`${item.text} mt-2 font-semibold text-center text-md`}
+              font="medium"
+              className={`${item.text} mt-2 text-center text-md`}
             >
               {item.title}
             </TextFont>

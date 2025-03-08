@@ -1,4 +1,4 @@
-import Svg, { Path } from "react-native-svg";
+import Svg, { Path, Circle } from "react-native-svg";
 
 export const UserIcon = (props: any) => {
   return (
@@ -6,11 +6,16 @@ export const UserIcon = (props: any) => {
       xmlns="http://www.w3.org/2000/svg"
       width={24}
       height={24}
-      fill="currentColor"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      className="lucide lucide-user"
       {...props}
     >
-      <Path fill="none" d="M0 0h24v24H0z" />
-      <Path d="M12 2a5 5 0 1 1-5 5l.005-.217A5 5 0 0 1 12 2zM14 14a5 5 0 0 1 5 5v1a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-1a5 5 0 0 1 5-5h4z" />
+      <Path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+      <Circle cx={12} cy={7} r={4} />
     </Svg>
   );
 };
@@ -20,12 +25,16 @@ export const HomeIcon = (props: any) => (
     xmlns="http://www.w3.org/2000/svg"
     width={24}
     height={24}
-    fill="currentColor"
-    className="icon icon-tabler icons-tabler-filled icon-tabler-home"
+    fill="none"
+    stroke="currentColor"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={2}
+    className="lucide lucide-house"
     {...props}
   >
-    <Path fill="none" d="M0 0h24v24H0z" />
-    <Path d="m12.707 2.293 9 9c.63.63.184 1.707-.707 1.707h-1v6a3 3 0 0 1-3 3h-1v-7a3 3 0 0 0-2.824-2.995L13 12h-2a3 3 0 0 0-3 3v7H7a3 3 0 0 1-3-3v-6H3c-.89 0-1.337-1.077-.707-1.707l9-9a1 1 0 0 1 1.414 0M13 14a1 1 0 0 1 1 1v7h-4v-7a1 1 0 0 1 .883-.993L11 14z" />
+    <Path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+    <Path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
   </Svg>
 );
 
@@ -37,10 +46,13 @@ export const WorkoutIcon = (props: any) => {
       height={24}
       fill="none"
       stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      className="lucide lucide-dumbbell"
       {...props}
     >
-      <Path stroke="none" d="M0 0h24v24H0z" />
-      <Path d="M2 12h1M6 8H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2M6 7v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zM9 12h6M15 7v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1zM18 8h2a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2M22 12h-1" />
+      <Path d="M14.4 14.4 9.6 9.6M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829zM21.5 21.5l-1.4-1.4M3.9 3.9 2.5 2.5M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z" />
     </Svg>
   );
 };
@@ -53,11 +65,14 @@ export const ProgressIcon = (props: any) => {
       height={24}
       fill="none"
       stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      className="lucide lucide-trending-up"
       {...props}
     >
-      <Path stroke="none" d="M0 0h24v24H0z" />
-      <Path d="m3 17 6-6 4 4 8-8" />
-      <Path d="M14 7h7v7" />
+      <Path d="m22 7-8.5 8.5-5-5L2 17" />
+      <Path d="M16 7h6v6" />
     </Svg>
   );
 };

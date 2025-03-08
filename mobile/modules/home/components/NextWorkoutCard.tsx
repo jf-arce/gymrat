@@ -1,6 +1,4 @@
-import { COLORS } from "@/constants/colors";
 import { AppButton } from "@/modules/core/components/AppButton";
-import { WorkoutIcon } from "@/modules/core/components/Icons";
 import { TextFont } from "@/modules/core/components/TextFont";
 import { ImageBackground, View } from "react-native";
 
@@ -17,13 +15,12 @@ export const NextWorkoutCard = () => {
       <View className="justify-between gap-5">
         <View className="flex-row items-center gap-2">
           <View className="">
-            {/* <WorkoutIcon color={COLORS.tertiary} /> */}
-            <TextFont font="black" className="text-white text-xl">
+            <TextFont font="bold" className="text-white text-2xl">
               Próximo Entrenamiento
             </TextFont>
             <TextFont
-              font="regular"
-              className="text-gray-400 font-semibold text-lg text-wrap max-w-60"
+              font="medium"
+              className="text-gray-400 font-semibold text-md text-wrap max-w-60"
               numberOfLines={2}
             >
               Rutina Push Pull Leg
@@ -31,18 +28,9 @@ export const NextWorkoutCard = () => {
           </View>
         </View>
         <View className="flex-row justify-between items-center mt-12">
-          {/* <View className="gap-2 mr-4">
-            <TextFont
-              font="semibold"
-              className="text-white font-semibold text-lg text-wrap max-w-60"
-              numberOfLines={2}
-            >
-              Rutina Push Pull Leg
-            </TextFont>
-          </View> */}
           <TextFont
             font="semibold"
-            className="text-gray-300 text-lg text-wrap max-w-60"
+            className="text-primary text-lg text-wrap max-w-60"
             numberOfLines={2}
           >
             Pecho y Biceps

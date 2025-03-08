@@ -32,7 +32,7 @@ export default function AppLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        navigationBarColor: COLORS.secondary,
+        navigationBarColor: COLORS.secondaryContrast,
       }}
     ></Stack>
   );

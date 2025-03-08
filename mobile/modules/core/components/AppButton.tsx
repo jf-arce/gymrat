@@ -39,7 +39,7 @@ export const AppButton = ({
         font="semibold"
         className={`
           text-secondary
-          text-sm
+          text-md
           ${variant === "primary" && "text-secondary"}
           ${variant === "secondary" && "text-primary"}
           ${textClassname}

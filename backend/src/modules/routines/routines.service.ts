@@ -39,7 +39,7 @@ export class RoutinesService {
     await this.prisma.routine.create({
       data: {
         name: createRoutineDto.name,
-        isCurrent: false,
+        isCurrent: createRoutineDto.isCurrent,
         nextWorkout: 1,
         userId: createRoutineDto.userId,
       },
@@ -120,6 +120,7 @@ export class RoutinesService {
       data: {
         name: updateRoutineDto.name,
         isCurrent: updateRoutineDto.isCurrent,
+        nextWorkout: updateRoutineDto.nextWorkout,
       },
     });
   }

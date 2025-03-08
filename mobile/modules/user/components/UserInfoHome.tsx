@@ -23,7 +23,10 @@ export const UserInfoHome = ({ user }: UserInfoHomeProps) => {
           />
         </View>
         <View className="gap-2 justify-between">
-          <TextFont font="black" className="text-xl text-white">
+          <TextFont
+            font="semibold"
+            className="text-xl text-white font-undinaru-bold"
+          >
             {user.username.length > 20
               ? `${user.username.slice(0, 17)}...`
               : user.username}

@@ -18,7 +18,7 @@ export const XpBar = ({
 
   return (
     <View className={`w-full ${containerClassname}`}>
-      <TextFont font="black" className="text-gray-200 text-sm">
+      <TextFont font="medium" className="text-gray-200 text-sm">
         Nivel {level}
       </TextFont>
 
@@ -26,7 +26,7 @@ export const XpBar = ({
         <View className="h-full bg-primary" style={{ width: `${progress}%` }} />
       </View>
 
-      <TextFont className="text-xs mt-2 text-gray-400 ">
+      <TextFont font="medium" className="text-xs mt-2 text-gray-400 ">
         {currentExp} / {expToNextLevel} XP (Nivel {level + 1})
       </TextFont>
     </View>
