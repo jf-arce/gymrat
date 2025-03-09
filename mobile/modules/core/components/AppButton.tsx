@@ -22,12 +22,12 @@ export const AppButton = ({
   icon,
   onPress,
 }: AppButtonProps) => {
-  const primaryStyles = `bg-primary active:bg-primary/80`;
-  const secondaryStyles = `bg-secondary active:bg-secondary/80`;
+  const primaryStyles = `bg-primary active:opacity-50`;
+  const secondaryStyles = `bg-secondary`;
   return (
     <Pressable
       className={`
-        flex-row justify-center items-center gap-2 transition-colors duration-75 py-3 px-3 rounded-xl disabled:bg-gray-500 
+        flex-row justify-center items-center gap-2 transition-colors duration-75 py-3 px-3 rounded-xl disabled:bg-gray-500 opacity-100
         ${variant === "primary" && primaryStyles}
         ${variant === "secondary" && secondaryStyles} 
         ${buttonClassname}
@@ -39,7 +39,7 @@ export const AppButton = ({
     >
       {icon || null}
       <TextFont
-        font="semibold"
+        font="medium"
         className={`
           !text-secondary
           text-md

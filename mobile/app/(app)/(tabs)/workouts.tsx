@@ -9,6 +9,7 @@ import { FlatList, ScrollView, View } from "react-native";
 import { Dumbbell } from "lucide-react-native";
 import { WorkoutCard } from "@/modules/routines-workouts/components/WorkoutCard";
 import { NextWorkoutCard } from "@/modules/home/components/NextWorkoutCard";
+import { ShortcutsSlides } from "@/modules/home/components/ShortcutsSlides";
 
 export default function WorkoutsScreen() {
   const { currentRoutine, loading } = useCurrentRoutineWorkouts();
@@ -23,6 +24,7 @@ export default function WorkoutsScreen() {
   return (
     <Screen>
       <ScrollView showsVerticalScrollIndicator={false}>
+        <ShortcutsSlides />
         <View className="flex-row justify-between items-center gap-2 w-full">
           <AppButton
             variant="primary"

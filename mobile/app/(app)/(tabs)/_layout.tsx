@@ -7,8 +7,8 @@ import {
 } from "@/modules/core/components/Icons";
 import { COLORS } from "@/constants/colors";
 import { InfoIcon } from "@/modules/core/components/Icons";
-import { View } from "react-native";
-import { PlusIcon } from "lucide-react-native";
+import { Pressable, View } from "react-native";
+import { BellIcon, PlusIcon, SearchIcon } from "lucide-react-native";
 
 export default function TabsLayout() {
   return (
@@ -41,8 +41,9 @@ export default function TabsLayout() {
           tabBarIcon: ({ color }) => <HomeIcon color={color} />,
           headerTitle: "GYMRAT",
           headerRight: () => (
-            <View className="pr-4">
-              <InfoIcon color={COLORS.primary} />
+            <View className="pr-4 flex-row gap-4">
+              <SearchIcon color={COLORS.primary} />
+              <BellIcon color={COLORS.primary} />
             </View>
           ),
         }}
@@ -55,9 +56,9 @@ export default function TabsLayout() {
           tabBarIcon: ({ color }) => <WorkoutIcon color={color} />,
           headerTitle: "Rutinas",
           headerRight: () => (
-            <View className="pr-4">
+            <Pressable className="pr-4 active:opacity-50">
               <PlusIcon color={COLORS.primary} size={30} />
-            </View>
+            </Pressable>
           ),
         }}
       />

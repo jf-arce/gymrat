@@ -8,7 +8,7 @@ interface ScreenProps {
 
 export default function Screen({ children, style }: ScreenProps) {
   return (
-    <View className="bg-secondary flex-1 pt-4 px-4" style={style}>
+    <View className="bg-secondary flex-1 pt-4 px-3" style={style}>
       {children}
     </View>
   );
