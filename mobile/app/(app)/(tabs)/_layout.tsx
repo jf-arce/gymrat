@@ -6,7 +6,6 @@ import {
   HomeIcon,
 } from "@/modules/core/components/Icons";
 import { COLORS } from "@/constants/colors";
-import { InfoIcon } from "@/modules/core/components/Icons";
 import { Pressable, View } from "react-native";
 import { BellIcon, PlusIcon, SearchIcon } from "lucide-react-native";
 

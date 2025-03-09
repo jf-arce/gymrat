@@ -5,7 +5,7 @@ import { Loading } from "@/modules/core/components/Loading";
 import Screen from "@/modules/core/components/Screen";
 import { TextFont } from "@/modules/core/components/TextFont";
 import { useCurrentRoutineWorkouts } from "@/modules/routines-workouts/hooks/useCurrentRoutineWorkouts";
-import { FlatList, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Dumbbell } from "lucide-react-native";
 import { WorkoutCard } from "@/modules/routines-workouts/components/WorkoutCard";
 import { NextWorkoutCard } from "@/modules/home/components/NextWorkoutCard";
