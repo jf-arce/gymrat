@@ -12,8 +12,9 @@ module.exports = {
       colors: {
         primary: "#C4EC39",
         secondary: "#121519", //Background
-        tertiary: "#5055c0",
+        tertiary: "#1F2937",
         white: "#F8F8F8",
+        secondaryContrast: "#0e1114",
       },
       fontFamily: {
         "marios-black": ["marios-black", "sans-serif"],

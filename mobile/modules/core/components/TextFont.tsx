@@ -46,7 +46,7 @@ export const TextFont = ({
   const fontType = getFont();
 
   return (
-    <Text {...props} className={`${fontType} ${props.className}`}>
+    <Text {...props} className={`${fontType} ${props.className} text-white`}>
       {children}
     </Text>
   );

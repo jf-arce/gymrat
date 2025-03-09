@@ -8,6 +8,7 @@ import {
 import { COLORS } from "@/constants/colors";
 import { InfoIcon } from "@/modules/core/components/Icons";
 import { View } from "react-native";
+import { PlusIcon } from "lucide-react-native";
 
 export default function TabsLayout() {
   return (
@@ -50,8 +51,14 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="workouts"
         options={{
-          title: "Entrenamientos",
+          title: "Entrenamiento",
           tabBarIcon: ({ color }) => <WorkoutIcon color={color} />,
+          headerTitle: "Rutinas",
+          headerRight: () => (
+            <View className="pr-4">
+              <PlusIcon color={COLORS.primary} size={30} />
+            </View>
+          ),
         }}
       />
 

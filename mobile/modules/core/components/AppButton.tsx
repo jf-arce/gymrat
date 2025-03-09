@@ -8,6 +8,7 @@ interface AppButtonProps {
   buttonClassname?: string;
   textClassname?: string;
   variant?: "primary" | "secondary";
+  icon?: React.ReactNode;
   onPress?: () => void;
 }
 
@@ -18,6 +19,7 @@ export const AppButton = ({
   buttonClassname,
   textClassname,
   variant = "primary",
+  icon,
   onPress,
 }: AppButtonProps) => {
   const primaryStyles = `bg-primary active:bg-primary/80`;
@@ -25,7 +27,7 @@ export const AppButton = ({
   return (
     <Pressable
       className={`
-        transition-all duration-75 py-3 px-3 items-center rounded-md disabled:bg-gray-500 
+        flex-row justify-center items-center gap-2 transition-colors duration-75 py-3 px-3 rounded-xl disabled:bg-gray-500 
         ${variant === "primary" && primaryStyles}
         ${variant === "secondary" && secondaryStyles} 
         ${buttonClassname}
@@ -35,10 +37,11 @@ export const AppButton = ({
       accessible
       accessibilityLabel={accessibilityLabel}
     >
+      {icon || null}
       <TextFont
         font="semibold"
         className={`
-          text-secondary
+          !text-secondary
           text-md
           ${variant === "primary" && "text-secondary"}
           ${variant === "secondary" && "text-primary"}

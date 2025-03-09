@@ -39,7 +39,7 @@ const data = [
 
 export const ShortcutsSlides = () => {
   return (
-    <View className="mt-10">
+    <View>
       <FlatList
         horizontal
         data={data}

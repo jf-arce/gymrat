@@ -1,4 +1,4 @@
-import Svg, { Path, Circle } from "react-native-svg";
+import Svg, { Path, Circle, Rect } from "react-native-svg";
 
 export const UserIcon = (props: any) => {
   return (
@@ -129,5 +129,23 @@ export const InfoIcon = (props: any) => (
     <Path stroke="none" d="M0 0h24v24H0z" />
     <Path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0M12 9h.01" />
     <Path d="M11 12h1v4h1" />
+  </Svg>
+);
+
+export const ListIcon = (props: any) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={24}
+    height={24}
+    fill="none"
+    stroke="currentColor"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={2}
+    className="lucide lucide-clipboard-list"
+    {...props}
+  >
+    <Rect width={8} height={4} x={8} y={2} rx={1} ry={1} />
+    <Path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M12 11h4M12 16h4M8 11h.01M8 16h.01" />
   </Svg>
 );
