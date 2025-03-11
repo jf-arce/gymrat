@@ -4,6 +4,7 @@ import { COLORS } from "@/constants/colors";
 import { useAuthStore } from "@/modules/auth/stores/auth.store";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 export default function AppLayout() {
   const { authenticated } = useAuthStore((state) => state.authSession);
@@ -31,12 +32,14 @@ export default function AppLayout() {
 
   return (
     <GestureHandlerRootView>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          navigationBarColor: COLORS.secondaryContrast,
-        }}
-      ></Stack>
+      <BottomSheetModalProvider>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            navigationBarColor: COLORS.secondaryContrast,
+          }}
+        ></Stack>
+      </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );
 }

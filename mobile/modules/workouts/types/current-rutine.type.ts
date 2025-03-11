@@ -3,12 +3,12 @@ import { Workout } from "./workout.type";
 
 export class CurrentRoutine extends RoutineClass {
   constructor(
-    public workouts: Workout[],
     public id: number,
     public name: string,
     public isCurrent: boolean,
     public nextWorkout: number,
     public user: string,
+    public workouts: Workout[],
   ) {
     super(id, name, isCurrent, nextWorkout, user);
   }

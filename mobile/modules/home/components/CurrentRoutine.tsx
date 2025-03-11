@@ -1,7 +1,7 @@
 import { COLORS } from "@/constants/colors";
 import { AppButton } from "@/modules/core/components/AppButton";
 import { TextFont } from "@/modules/core/components/TextFont";
-import { CurrentRoutine } from "@/modules/routines-workouts/types/current-rutine.type";
+import { CurrentRoutine } from "@/modules/workouts/types/current-rutine.type";
 import { Dumbbell } from "lucide-react-native";
 import { View } from "react-native";
 

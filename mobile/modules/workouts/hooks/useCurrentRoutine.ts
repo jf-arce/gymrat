@@ -4,10 +4,10 @@ import { RoutinesService } from "../services/routines.service";
 import { WorkoutsService } from "../services/workouts.service";
 import { CurrentRoutine } from "../types/current-rutine.type";
 
-export const useCurrentRoutineWorkouts = () => {
+export const useCurrentRoutine = () => {
   const user = useAuthStore((state) => state.authSession.user);
-  const [currentRoutine, setCurrentRoutine] = useState<CurrentRoutine | null>(
-    null,
+  const [currentRoutine, setCurrentRoutine] = useState<CurrentRoutine>(
+    new CurrentRoutine(0, "", false, 0, "", []),
   );
   const [loading, setLoading] = useState(true);
 
@@ -30,12 +30,12 @@ export const useCurrentRoutineWorkouts = () => {
         // Guardar la rutina actualizada en el estado
         setCurrentRoutine(
           new CurrentRoutine(
-            routineWorkouts,
             currentRoutine.id,
             currentRoutine.name,
             currentRoutine.isCurrent,
             currentRoutine.nextWorkout,
             currentRoutine.user,
+            routineWorkouts,
           ),
         );
       } catch (error) {

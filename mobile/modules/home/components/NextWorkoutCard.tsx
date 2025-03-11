@@ -2,7 +2,7 @@ import { AppButton } from "@/modules/core/components/AppButton";
 import { Loading } from "@/modules/core/components/Loading";
 import { TextFont } from "@/modules/core/components/TextFont";
 import { ImageBackground, View } from "react-native";
-import { useCurrentRoutineWorkouts } from "@/modules/routines-workouts/hooks/useCurrentRoutineWorkouts";
+import { useCurrentRoutineWorkouts } from "@/modules/workouts/hooks/useCurrentRoutine";
 
 const card1 =
   "https://p4.wallpaperbetter.com/wallpaper/328/683/607/man-fitness-gym-arms-wallpaper-preview.jpg";

@@ -7,14 +7,13 @@ import { DailyProgress } from "@/modules/home/components/DailyProgress";
 import { ChallengeOfTheDay } from "@/modules/home/components/ChallengeOfTheDay";
 import { CurrentRoutineCard } from "@/modules/home/components/CurrentRoutine";
 import { RecentAchievements } from "@/modules/home/components/RecentAchievements";
-import { useCurrentRoutineWorkouts } from "@/modules/routines-workouts/hooks/useCurrentRoutineWorkouts";
+import { useCurrentRoutine } from "@/modules/workouts/hooks/useCurrentRoutine";
 
 export default function Index() {
   const { user, isUserLoading } = useUser();
-  const { currentRoutine, loading: currentRoutineLoading } =
-    useCurrentRoutineWorkouts();
+  const { currentRoutine } = useCurrentRoutine();
 
-  if (isUserLoading || !user || currentRoutineLoading) {
+  if (isUserLoading || !user) {
     return (
       <Screen>
         <Loading />

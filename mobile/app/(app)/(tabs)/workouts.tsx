@@ -1,17 +1,10 @@
 import { COLORS } from "@/constants/colors";
-import { AppButton } from "@/modules/core/components/AppButton";
 import { Loading } from "@/modules/core/components/Loading";
 import Screen from "@/modules/core/components/Screen";
 import { TextFont } from "@/modules/core/components/TextFont";
-import { useCurrentRoutineWorkouts } from "@/modules/routines-workouts/hooks/useCurrentRoutineWorkouts";
+import { useCurrentRoutine } from "@/modules/workouts/hooks/useCurrentRoutine";
 import { Pressable, ScrollView, View } from "react-native";
-import {
-  ChevronRightIcon,
-  EllipsisIcon,
-  Pencil,
-  PlayIcon,
-  Trash,
-} from "lucide-react-native";
+import { Pencil, Trash } from "lucide-react-native";
 import { ShortcutsSlides } from "@/modules/home/components/ShortcutsSlides";
 import { useCallback, useMemo, useRef, useState } from "react";
 import Animated, {
@@ -19,18 +12,19 @@ import Animated, {
   withTiming,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import {
+  BottomSheetBackdrop,
+  BottomSheetModal,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
+import { CurrentRoutine } from "@/modules/workouts/components/CurrentRoutine";
 
 export default function WorkoutsScreen() {
-  const { currentRoutine, loading } = useCurrentRoutineWorkouts();
+  const { currentRoutine, loading } = useCurrentRoutine();
   const [option, setOption] = useState({
     currentRoutine: true,
     myRoutines: false,
   });
-
-  const sheetRef = useRef<BottomSheet>(null);
-  const [isOpenButtonSheet, setIsOpenButtonSheet] = useState(false);
-  const snapPoints = useMemo(() => ["40%"], []);
 
   // Pressable bar animation
   const translateX = useSharedValue(0);
@@ -43,36 +37,39 @@ export default function WorkoutsScreen() {
       { translateX: withTiming(translateX.value, { duration: 150 }) },
     ],
   }));
-
   const handleLeftPressable = () => {
     setOption({ currentRoutine: true, myRoutines: false });
     toggle("left");
   };
-
   const handleRightPressable = () => {
     setOption({ currentRoutine: false, myRoutines: true });
     toggle("right");
   };
 
-  const handleButtonSheet = useCallback((index: number) => {
-    sheetRef.current?.snapToIndex(index);
-    setIsOpenButtonSheet(true);
+  // BottomSheet
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const snapPoints = useMemo(() => ["30%"], []);
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
   }, []);
+  const renderBackdrop = useCallback(
+    (props: any) => (
+      <BottomSheetBackdrop
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+        {...props}
+      />
+    ),
+    [],
+  );
 
-  if (loading || !currentRoutine) {
+  if (loading) {
     return (
       <Screen>
         <Loading />
       </Screen>
     );
   }
-
-  const currentWorkout = currentRoutine.getCurrentWorkout();
-  const nextWorkouts = currentWorkout
-    ? currentRoutine.workouts.filter(
-        (workout) => workout.number > currentWorkout.number,
-      )
-    : [];
 
   return (
     <Screen>
@@ -112,102 +109,21 @@ export default function WorkoutsScreen() {
         </View>
 
         {option.currentRoutine ? (
-          <View>
-            <View className="flex-row justify-between items-center px-1">
-              <View>
-                <TextFont font="semibold" className="text-2xl">
-                  {currentRoutine.name}
-                </TextFont>
-                <TextFont font="medium" className="text-base text-gray-500">
-                  {currentRoutine.workouts.length} días por semana
-                </TextFont>
-              </View>
-              <TextFont
-                font="medium"
-                className="text-lg px-3 rounded-full !text-primary border-[1px] border-primary"
-              >
-                Día {currentRoutine?.getCurrentWorkout()?.number} /{" "}
-                {currentRoutine?.workouts.length}
-              </TextFont>
-            </View>
-
-            <Pressable key={currentWorkout?.id} className="active:opacity-60">
-              <View
-                className="px-4 py-7 bg-black rounded-xl gap-4 my-4"
-                key={currentWorkout?.id}
-              >
-                <View className="flex-row justify-between items-center mb-1">
-                  <View className="flex-row gap-3">
-                    <TextFont
-                      font="medium"
-                      className="text-lg px-3 rounded-full !text-blue-500 border-[1px] border-blue-500"
-                    >
-                      Día {currentWorkout?.number}
-                    </TextFont>
-                    <TextFont font="semibold" className="text-xl">
-                      {currentWorkout?.name}
-                    </TextFont>
-                  </View>
-                  <Pressable
-                    className="active:opacity-50"
-                    onPress={() => handleButtonSheet(1)}
-                  >
-                    <View>
-                      <EllipsisIcon color={COLORS.white} size={30} />
-                    </View>
-                  </Pressable>
-                </View>
-                <AppButton
-                  buttonClassname="!bg-blue-500"
-                  textClassname="!text-white"
-                  icon={<PlayIcon color={COLORS.white} />}
-                >
-                  Comenzar Entrenamiento
-                </AppButton>
-              </View>
-            </Pressable>
-
-            <TextFont font="semibold" className="text-2xl my-5">
-              Próximos Entrenamientos
-            </TextFont>
-
-            {nextWorkouts.map((workout) => (
-              <Pressable key={workout.id} className="active:opacity-50">
-                <View
-                  className="p-4 bg-black rounded-xl gap-4 mb-4"
-                  key={workout.id}
-                >
-                  <View className="flex-row justify-between items-center mb-1">
-                    <View className="flex-row gap-3">
-                      <TextFont
-                        font="medium"
-                        className="text-lg px-3 rounded-full !text-blue-500 border-[1px] border-blue-500"
-                      >
-                        Día {workout.number}
-                      </TextFont>
-                      <TextFont font="semibold" className="text-xl">
-                        {workout.name}
-                      </TextFont>
-                    </View>
-                    <View>
-                      <ChevronRightIcon color={COLORS.primary} size={30} />
-                    </View>
-                  </View>
-                </View>
-              </Pressable>
-            ))}
-          </View>
+          <CurrentRoutine
+            currentRoutine={currentRoutine}
+            handlePresentModalPress={handlePresentModalPress}
+          />
         ) : (
           <ShortcutsSlides />
         )}
       </ScrollView>
-      <BottomSheet
-        ref={sheetRef}
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
         snapPoints={snapPoints}
         enablePanDownToClose
-        index={-1}
-        onClose={() => setIsOpenButtonSheet(false)}
-        handleIndicatorStyle={{ backgroundColor: COLORS.primary }}
+        backdropComponent={renderBackdrop}
+        index={1}
+        handleIndicatorStyle={{ backgroundColor: COLORS.secondaryText }}
         handleStyle={{
           backgroundColor: COLORS.secondaryContrast,
           borderRadius: 100,
@@ -216,9 +132,9 @@ export default function WorkoutsScreen() {
       >
         <BottomSheetView className="p-4 justify-center">
           <TextFont font="medium" className="text-xl text-center mb-4">
-            Pecho Bicep
+            {currentRoutine.getCurrentWorkout()?.name}
           </TextFont>
-          <View className="bg-secondary rounded-lg justify-center">
+          <View className="bg-secondary rounded-lg">
             <Pressable className="active:opacity-50 p-4 flex-row gap-3 items-center">
               <Pencil color={COLORS.white} size={25} />
               <TextFont font="medium" className="text-lg text-white">
@@ -234,7 +150,7 @@ export default function WorkoutsScreen() {
             </Pressable>
           </View>
         </BottomSheetView>
-      </BottomSheet>
+      </BottomSheetModal>
     </Screen>
   );
 }
