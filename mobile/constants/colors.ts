@@ -4,8 +4,10 @@ export const COLORS = {
   tertiary: "#6637f2", // Purple
   secondaryContrast: "#0e1114",
 
+  blue: "#3b82f6",
   yellow: "#f8e423",
   purple: "#9a4fe3",
+  red: "#ef4444",
 
   success: "#28a745",
   danger: "#dc3545",

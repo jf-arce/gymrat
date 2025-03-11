@@ -3,6 +3,7 @@ import { ActivityIndicator, View } from "react-native";
 import { COLORS } from "@/constants/colors";
 import { useAuthStore } from "@/modules/auth/stores/auth.store";
 import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function AppLayout() {
   const { authenticated } = useAuthStore((state) => state.authSession);
@@ -29,11 +30,13 @@ export default function AppLayout() {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        navigationBarColor: COLORS.secondaryContrast,
-      }}
-    ></Stack>
+    <GestureHandlerRootView>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          navigationBarColor: COLORS.secondaryContrast,
+        }}
+      ></Stack>
+    </GestureHandlerRootView>
   );
 }
