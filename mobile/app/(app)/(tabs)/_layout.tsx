@@ -34,7 +34,7 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="(home)"
         options={{
           title: "Inicio",
           tabBarIcon: ({ color }) => <HomeIcon color={color} />,
@@ -49,7 +49,7 @@ export default function TabsLayout() {
       />
 
       <Tabs.Screen
-        name="workouts"
+        name="(workouts)"
         options={{
           title: "Entrenamiento",
           tabBarIcon: ({ color }) => <WorkoutIcon color={color} />,
@@ -63,7 +63,7 @@ export default function TabsLayout() {
       />
 
       <Tabs.Screen
-        name="progress"
+        name="(progress)"
         options={{
           title: "Progreso",
           tabBarIcon: ({ color }) => <ProgressIcon color={color} />,
@@ -71,7 +71,7 @@ export default function TabsLayout() {
       />
 
       <Tabs.Screen
-        name="profile"
+        name="(profile)"
         options={{
           title: "Perfil",
           tabBarIcon: ({ color }) => <UserIcon color={color} />,

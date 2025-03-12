@@ -37,8 +37,9 @@ export default function AppLayout() {
           screenOptions={{
             headerShown: false,
             navigationBarColor: COLORS.secondaryContrast,
+            animation: "fade",
           }}
-        ></Stack>
+        />
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );

@@ -26,6 +26,11 @@ export default function WorkoutsScreen() {
     myRoutines: false,
   });
 
+  const [workoutTitle, setWorkoutTitle] = useState("");
+  const handleWorkoutTitle = (title: string) => {
+    setWorkoutTitle(title);
+  };
+
   // Pressable bar animation
   const translateX = useSharedValue(0);
   const buttonWidth = useRef(0);
@@ -112,6 +117,7 @@ export default function WorkoutsScreen() {
           <CurrentRoutine
             currentRoutine={currentRoutine}
             handlePresentModalPress={handlePresentModalPress}
+            handleWorkoutTitle={handleWorkoutTitle}
           />
         ) : (
           <ShortcutsSlides />
@@ -132,7 +138,7 @@ export default function WorkoutsScreen() {
       >
         <BottomSheetView className="p-4 justify-center">
           <TextFont font="medium" className="text-xl text-center mb-4">
-            {currentRoutine.getCurrentWorkout()?.name}
+            {workoutTitle}
           </TextFont>
           <View className="bg-secondary rounded-lg">
             <Pressable className="active:opacity-50 p-4 flex-row gap-3 items-center">
