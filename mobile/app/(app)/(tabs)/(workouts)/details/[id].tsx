@@ -67,7 +67,7 @@ export default function WorkoutDetailsScreen() {
 
   return (
     <Screen>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={true}>
         <Stack.Screen
           name="details/[id]"
           options={{
@@ -80,13 +80,13 @@ export default function WorkoutDetailsScreen() {
               fontFamily: "clashgrotesk-bold",
             },
             headerTitle: `${workoutExercises[0]?.workouts.name}`,
-
+            headerTitleAlign: "center",
             headerRight: () => (
               <Pressable
                 className="active:opacity-50"
                 onPress={handlePresentModalPress}
               >
-                <View>
+                <View className="py-2">
                   <EllipsisIcon color={COLORS.white} size={30} />
                 </View>
               </Pressable>
@@ -122,9 +122,12 @@ export default function WorkoutDetailsScreen() {
             </Pressable>
           </View>
 
-          <View className="gap-8">
+          <View className="gap-5">
             {workoutExercises.map((workoutExercise) => (
-              <View key={workoutExercise.exercises.id}>
+              <View
+                key={workoutExercise.exercises.id}
+                className="bg-black p-4 rounded-xl"
+              >
                 <View className="flex-row gap-4 items-center">
                   <View>
                     <View className="bg-tertiary rounded-xl p-2">
@@ -148,10 +151,10 @@ export default function WorkoutDetailsScreen() {
                   </View>
                 </View>
 
-                <View className="bg-tertiary h-[1px] w-full mx-auto rounded-full mt-4" />
+                <View className="bg-tertiary h-[1px] w-full mx-auto rounded-full mt-3" />
 
-                <View className="mt-4 px-2">
-                  <View className="flex-row items-center gap-2 py-2">
+                <View className="mt-2 px-2">
+                  <View className="flex-row items-center gap-2 py-2 mb-2">
                     <Clock color={COLORS.purple} size={18} />
                     <TextFont font="medium" className="!text-gray-300">
                       {workoutExercise.rest} seg de descanso
@@ -184,6 +187,7 @@ export default function WorkoutDetailsScreen() {
           </View>
         </View>
       </ScrollView>
+
       <BottomSheetModal
         ref={bottomSheetModalRef}
         snapPoints={snapPoints}

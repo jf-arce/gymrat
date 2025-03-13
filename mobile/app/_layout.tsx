@@ -1,7 +1,7 @@
 import { Slot } from "expo-router";
 import "../global.css";
 import { StatusBar } from "expo-status-bar";
-import { FontProvider } from "@/modules/core/providers/font.provider";
+import { FontProvider } from "@/modules/core/context/font.provider";
 import {
   configureReanimatedLogger,
   ReanimatedLogLevel,

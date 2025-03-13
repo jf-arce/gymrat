@@ -10,6 +10,7 @@ export const COLORS = {
   purple: "#9a4fe3",
   red: "#ef4444",
   white: "#F8F8F8",
+  black: "#0a0a0a",
 
   success: "#28a745",
   danger: "#dc3545",
@@ -17,5 +18,4 @@ export const COLORS = {
   info: "#17a2b8",
   light: "#f8f9fa",
   dark: "#343a40",
-  black: "",
 };

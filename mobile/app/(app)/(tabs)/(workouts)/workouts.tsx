@@ -4,7 +4,7 @@ import Screen from "@/modules/core/components/Screen";
 import { TextFont } from "@/modules/core/components/TextFont";
 import { useCurrentRoutine } from "@/modules/workouts/hooks/useCurrentRoutine";
 import { Pressable, ScrollView, View } from "react-native";
-import { Pencil, Trash } from "lucide-react-native";
+import { Pencil, PlusIcon, Trash } from "lucide-react-native";
 import { ShortcutsSlides } from "@/modules/home/components/ShortcutsSlides";
 import { useCallback, useMemo, useRef, useState } from "react";
 import Animated, {
@@ -18,6 +18,7 @@ import {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { CurrentRoutine } from "@/modules/workouts/components/CurrentRoutine";
+import { AppButton } from "@/modules/core/components/AppButton";
 
 export default function WorkoutsScreen() {
   const { currentRoutine, loading } = useCurrentRoutine();
@@ -120,7 +121,41 @@ export default function WorkoutsScreen() {
             handleWorkoutTitle={handleWorkoutTitle}
           />
         ) : (
-          <ShortcutsSlides />
+          // <ShortcutsSlides />
+          <View>
+            <View className="mb-8">
+              <AppButton
+                icon={<PlusIcon color={COLORS.white} size={25} />}
+                buttonClassname="!bg-blue-500"
+                textClassname="!text-white"
+              >
+                Nueva rutina
+              </AppButton>
+            </View>
+            <View className="gap-4">
+              {[1, 2, 3].map((item, index) => (
+                <View
+                  className="flex-row justify-between items-center bg-black p-4 rounded-xl"
+                  key={index}
+                >
+                  <View>
+                    <TextFont font="medium" className="text-xl">
+                      Rutina de piernas
+                    </TextFont>
+                    <TextFont font="regular" className="text-sm">
+                      6 ejercicios
+                    </TextFont>
+                  </View>
+                  <TextFont
+                    font="medium"
+                    className="text-base bg-green-500 px-3 rounded-full"
+                  >
+                    Actual
+                  </TextFont>
+                </View>
+              ))}
+            </View>
+          </View>
         )}
       </ScrollView>
       <BottomSheetModal

@@ -31,6 +31,9 @@ export default function TabsLayout() {
           fontSize: 12,
           marginTop: 2,
         },
+        sceneStyle: {
+          backgroundColor: COLORS.secondary,
+        },
       }}
     >
       <Tabs.Screen
@@ -52,7 +55,7 @@ export default function TabsLayout() {
         name="(workouts)"
         options={{
           headerShown: false,
-          title: "Entrenamiento",
+          title: "Rutinas",
           tabBarIcon: ({ color }) => <WorkoutIcon color={color} />,
           headerTitle: "Rutinas",
           headerRight: () => (

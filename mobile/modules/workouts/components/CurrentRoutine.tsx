@@ -53,7 +53,7 @@ export const CurrentRoutine = ({
         }}
         asChild
       >
-        <Pressable key={currentWorkout?.id} className="active:opacity-60">
+        <Pressable className="active:opacity-60">
           <View
             className="px-4 py-7 bg-black rounded-xl gap-4 mt-4"
             key={currentWorkout?.id}
@@ -106,12 +106,10 @@ export const CurrentRoutine = ({
             params: { id: workout?.id },
           }}
           asChild
+          key={workout.id}
         >
-          <Pressable key={workout.id} className="active:opacity-50">
-            <View
-              className="p-4 bg-black rounded-xl gap-4 mb-4"
-              key={workout.id}
-            >
+          <Pressable className="active:opacity-50">
+            <View className="p-4 bg-black rounded-xl gap-4 mb-4">
               <View className="flex-row justify-between items-center mb-1">
                 <View className="flex-row gap-3">
                   <TextFont
