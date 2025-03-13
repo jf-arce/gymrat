@@ -33,7 +33,7 @@ export const CurrentRoutine = ({
           <TextFont font="semibold" className="text-2xl">
             {currentRoutine.name}
           </TextFont>
-          <TextFont font="medium" className="text-base text-gray-500">
+          <TextFont font="medium" className="text-base !text-secondaryText">
             {currentRoutine.workouts.length} días por semana
           </TextFont>
         </View>
@@ -55,7 +55,7 @@ export const CurrentRoutine = ({
       >
         <Pressable key={currentWorkout?.id} className="active:opacity-60">
           <View
-            className="px-4 py-7 bg-black rounded-xl gap-4 my-4"
+            className="px-4 py-7 bg-black rounded-xl gap-4 mt-4"
             key={currentWorkout?.id}
           >
             <View className="flex-row justify-between items-center mb-1">
@@ -93,39 +93,52 @@ export const CurrentRoutine = ({
         </Pressable>
       </Link>
 
-      <TextFont font="semibold" className="text-2xl my-5">
+      <View className="bg-tertiary h-1 w-full mx-auto rounded-full my-6" />
+
+      <TextFont font="semibold" className="text-2xl mb-5">
         Próximos Entrenamientos
       </TextFont>
 
       {nextWorkouts.map((workout) => (
-        <Pressable key={workout.id} className="active:opacity-50">
-          <View className="p-4 bg-black rounded-xl gap-4 mb-4" key={workout.id}>
-            <View className="flex-row justify-between items-center mb-1">
-              <View className="flex-row gap-3">
-                <TextFont
-                  font="medium"
-                  className="text-lg px-3 rounded-full !text-blue-500 border-[1px] border-blue-500"
-                >
-                  Día {workout.number}
-                </TextFont>
-                <TextFont font="semibold" className="text-xl">
-                  {workout.name}
-                </TextFont>
-              </View>
-              <Pressable
-                className="active:opacity-50"
-                onPress={() => {
-                  handleWorkoutTitle(workout.name);
-                  handlePresentModalPress();
-                }}
-              >
-                <View>
-                  <EllipsisIcon color={COLORS.white} size={30} />
+        <Link
+          href={{
+            pathname: "/(app)/(tabs)/(workouts)/details/[id]",
+            params: { id: workout?.id },
+          }}
+          asChild
+        >
+          <Pressable key={workout.id} className="active:opacity-50">
+            <View
+              className="p-4 bg-black rounded-xl gap-4 mb-4"
+              key={workout.id}
+            >
+              <View className="flex-row justify-between items-center mb-1">
+                <View className="flex-row gap-3">
+                  <TextFont
+                    font="medium"
+                    className="text-lg px-3 rounded-full !text-blue-500 border-[1px] border-blue-500"
+                  >
+                    Día {workout.number}
+                  </TextFont>
+                  <TextFont font="semibold" className="text-xl">
+                    {workout.name}
+                  </TextFont>
                 </View>
-              </Pressable>
+                <Pressable
+                  className="active:opacity-50"
+                  onPress={() => {
+                    handleWorkoutTitle(workout.name);
+                    handlePresentModalPress();
+                  }}
+                >
+                  <View>
+                    <EllipsisIcon color={COLORS.white} size={30} />
+                  </View>
+                </Pressable>
+              </View>
             </View>
-          </View>
-        </Pressable>
+          </Pressable>
+        </Link>
       ))}
     </View>
   );

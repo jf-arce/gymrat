@@ -77,10 +77,16 @@ export class WorkoutsExercisesService {
         workoutId,
       },
       omit: {
+        id: true,
         exerciseId: true,
         workoutId: true,
       },
       include: {
+        workouts: {
+          select: {
+            name: true,
+          },
+        },
         exercises: {
           omit: {
             userId: true,

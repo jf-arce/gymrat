@@ -9,7 +9,9 @@ interface CurrentRoutineProps {
   currentRoutine: CurrentRoutine | null;
 }
 
-export const CurrentRoutineCard = ({ currentRoutine }: CurrentRoutineProps) => {
+export const CurrentRoutineCardHome = ({
+  currentRoutine,
+}: CurrentRoutineProps) => {
   return (
     <View className="p-4 bg-black rounded-xl mb-4 gap-3">
       <View className="flex-row justify-between items-center">

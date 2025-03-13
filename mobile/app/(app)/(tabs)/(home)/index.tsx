@@ -5,7 +5,7 @@ import { Loading } from "@/modules/core/components/Loading";
 import { UserInfoHome } from "@/modules/user/components/UserInfoHome";
 import { DailyProgress } from "@/modules/home/components/DailyProgress";
 import { ChallengeOfTheDay } from "@/modules/home/components/ChallengeOfTheDay";
-import { CurrentRoutineCard } from "@/modules/home/components/CurrentRoutine";
+import { CurrentRoutineCardHome } from "@/modules/home/components/CurrentRoutineCardHome";
 import { RecentAchievements } from "@/modules/home/components/RecentAchievements";
 import { useCurrentRoutine } from "@/modules/workouts/hooks/useCurrentRoutine";
 
@@ -27,7 +27,7 @@ export default function Index() {
         <UserInfoHome user={user} />
         <DailyProgress />
         <ChallengeOfTheDay />
-        <CurrentRoutineCard currentRoutine={currentRoutine} />
+        <CurrentRoutineCardHome currentRoutine={currentRoutine} />
         <RecentAchievements />
       </ScrollView>
     </Screen>

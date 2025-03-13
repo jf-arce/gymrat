@@ -15,6 +15,8 @@ module.exports = {
         tertiary: "#1F2937",
         white: "#F8F8F8",
         secondaryContrast: "#0e1114",
+        secondaryText: "#8D8D8D",
+        black: "#0a0a0a",
       },
       fontFamily: {
         "marios-black": ["marios-black", "sans-serif"],

@@ -51,6 +51,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="(workouts)"
         options={{
+          headerShown: false,
           title: "Entrenamiento",
           tabBarIcon: ({ color }) => <WorkoutIcon color={color} />,
           headerTitle: "Rutinas",
