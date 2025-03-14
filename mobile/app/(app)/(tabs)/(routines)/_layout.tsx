@@ -7,7 +7,7 @@ export default function WorkoutsLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="workouts"
+        name="routines"
         options={{
           title: "Rutinas",
           headerShown: true,

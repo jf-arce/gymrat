@@ -48,7 +48,7 @@ export const CurrentRoutine = ({
 
       <Link
         href={{
-          pathname: "/(app)/(tabs)/(workouts)/details/[id]",
+          pathname: "/(app)/(tabs)/(routines)/workout/[id]",
           params: { id: currentWorkout?.id },
         }}
         asChild
@@ -102,7 +102,7 @@ export const CurrentRoutine = ({
       {nextWorkouts.map((workout) => (
         <Link
           href={{
-            pathname: "/(app)/(tabs)/(workouts)/details/[id]",
+            pathname: "/(app)/(tabs)/(routines)/workout/[id]",
             params: { id: workout?.id },
           }}
           asChild
