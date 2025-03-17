@@ -12,14 +12,7 @@ import {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { Stack, useLocalSearchParams } from "expo-router";
-import {
-  Clock,
-  Dumbbell,
-  EllipsisIcon,
-  Pencil,
-  PlayIcon,
-  Trash,
-} from "lucide-react-native";
+import { EllipsisIcon, Pencil, PlayIcon, Trash } from "lucide-react-native";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
 
@@ -67,32 +60,32 @@ export default function WorkoutDetailsScreen() {
 
   return (
     <Screen>
-      <Stack.Screen
-        name="details/[id]"
-        options={{
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: COLORS.secondaryContrast,
-          },
-          headerTintColor: COLORS.white,
-          headerTitleStyle: {
-            fontFamily: "clashgrotesk-bold",
-          },
-          headerTitle: `${workoutExercises[0]?.workouts.name}`,
-          headerTitleAlign: "center",
-          headerRight: () => (
-            <Pressable
-              className="active:opacity-50"
-              onPress={handlePresentModalPress}
-            >
-              <View className="py-2">
-                <EllipsisIcon color={COLORS.white} size={30} />
-              </View>
-            </Pressable>
-          ),
-        }}
-      />
       <ScrollView showsVerticalScrollIndicator={false}>
+        <Stack.Screen
+          name="workout/[id]"
+          options={{
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: COLORS.secondaryContrast,
+            },
+            headerTintColor: COLORS.white,
+            headerTitleStyle: {
+              fontFamily: "clashgrotesk-bold",
+            },
+            headerTitle: `${workoutExercises[0]?.workouts.name}`,
+            headerTitleAlign: "center",
+            headerRight: () => (
+              <Pressable
+                className="active:opacity-50"
+                onPress={handlePresentModalPress}
+              >
+                <View className="py-2">
+                  <EllipsisIcon color={COLORS.white} size={30} />
+                </View>
+              </Pressable>
+            ),
+          }}
+        />
         <View className="gap-5 mb-8">
           <AppButton
             buttonClassname="!bg-blue-500"

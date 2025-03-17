@@ -1,10 +1,10 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-export default function NewRoutine() {
+export default function addExercisesScreen() {
   return (
     <View>
-      <Text>new-routine</Text>
+      <Text>add-exercises</Text>
     </View>
   );
 }

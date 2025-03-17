@@ -7,6 +7,7 @@ import React from "react";
 import { View } from "react-native";
 import { useAllRoutines } from "../hooks/useAllRoutines";
 import { Pressable } from "react-native-gesture-handler";
+import { Link } from "expo-router";
 
 export const MyRoutines = () => {
   const user = useAuthStore((state) => state.authSession.user);
@@ -15,13 +16,15 @@ export const MyRoutines = () => {
   return (
     <View>
       <View className="mb-8">
-        <AppButton
-          icon={<PlusIcon color={COLORS.white} size={25} />}
-          buttonClassname="!bg-blue-500"
-          textClassname="!text-white"
-        >
-          Nueva rutina
-        </AppButton>
+        <Link href="/(app)/(tabs)/(routines)/(create)/create-routine" asChild>
+          <AppButton
+            icon={<PlusIcon color={COLORS.white} size={25} />}
+            buttonClassname="!bg-blue-500"
+            textClassname="!text-white"
+          >
+            Nueva rutina
+          </AppButton>
+        </Link>
       </View>
       <View className="gap-4">
         {routines.map((routine) => (
